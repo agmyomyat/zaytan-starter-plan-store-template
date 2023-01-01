@@ -34,6 +34,9 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
     if (!cart.email) {
       return
     }
+    if (!cart.shipping_address.phone) {
+      return
+    }
 
     if (cart.shipping_methods.length < 1) {
       return
@@ -53,6 +56,8 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
       return (
         <PayPalPaymentButton notReady={notReady} session={paymentSession} />
       )
+    case "KbzPay":
+      return <ManualTestPaymentButton notReady={notReady} />
     default:
       return <Button disabled>Select a payment method</Button>
   }
@@ -67,9 +72,8 @@ const StripePaymentButton = ({
 }) => {
   const [disabled, setDisabled] = useState(false)
   const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  )
+  const [errorMessage, setErrorMessage] =
+    useState<string | undefined>(undefined)
 
   const { cart } = useCart()
   const { onPaymentCompleted } = useCheckout()
@@ -172,9 +176,8 @@ const PayPalPaymentButton = ({
   notReady: boolean
 }) => {
   const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  )
+  const [errorMessage, setErrorMessage] =
+    useState<string | undefined>(undefined)
 
   const { cart } = useCart()
   const { onPaymentCompleted } = useCheckout()

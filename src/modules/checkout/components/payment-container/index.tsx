@@ -14,8 +14,12 @@ type PaymentContainerProps = {
 
 const PaymentInfoMap: Record<string, { title: string; description: string }> = {
   KbzPay: {
-    title: "Kbzpay",
-    description: "Pay with Kbzpay",
+    title: "KbzPay",
+    description: "Pay with KbzPay",
+  },
+  WavePay: {
+    title: "WavePay",
+    description: "Pay with WavePay",
   },
   stripe: {
     title: "Credit card",
@@ -83,6 +87,8 @@ const PaymentElement = ({
         </div>
       )
     case "KbzPay":
+      return <PaymentTest />
+    case "WavePay":
       return <PaymentTest />
     case "manual":
       // We only display the test payment form if we are in a development environment

@@ -5,7 +5,13 @@ module.exports = withStoreConfig({
   features: store.features,
   reactStrictMode: true,
   images: {
-    domains: ["medusa-public-images.s3.eu-west-1.amazonaws.com", "localhost"],
+    domains: [
+      "medusa-public-images.s3.eu-west-1.amazonaws.com",
+      "localhost",
+      "minio.hz-fal.eiga.sbs",
+      "piware.ap-south-1.linodeobjects.com",
+      "eiga.ap-south-1.linodeobjects.com",
+    ],
   },
 })
 

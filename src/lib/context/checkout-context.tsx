@@ -16,6 +16,7 @@ import {
   useRegions,
   useSetPaymentSession,
   useUpdateCart,
+  useUpdatePaymentSession,
 } from "medusa-react"
 import { useRouter } from "next/router"
 import React, { createContext, useContext, useEffect, useMemo } from "react"
@@ -82,7 +83,10 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
     defaultValues: mapFormValues(customer, cart, countryCode),
     reValidateMode: "onChange",
   })
-
+  const {
+    mutate: updatePaymentSessionMutation,
+    isLoading: updatingPaymentSession,
+  } = useUpdatePaymentSession(cart?.id!)
   const {
     mutate: setPaymentSessionMutation,
     isLoading: settingPaymentSession,
@@ -226,6 +230,18 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
    */
   const setPaymentSession = (providerId: string) => {
     if (cart) {
+      console.log("setpaymentSession firing")
+      // updatePaymentSessionMutation(
+      //   {
+      //     data: { cart: JSON.stringify(cart), paymentMethod: "QR" },
+      //     provider_id: providerId,
+      //   },
+      //   {
+      //     onSuccess: ({ cart }) => {
+      //       setCart(cart)
+      //     },
+      //   }
+      // )
       setPaymentSessionMutation(
         {
           provider_id: providerId,
