@@ -41,6 +41,9 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
     enabled: !!cart.id,
   })
 
+  useEffect(() => {
+    console.log("shippingOprionts", shipping_options)
+  }, [shipping_options])
   // Any time the cart changes we need to ensure that we are displaying valid shipping options
   useEffect(() => {
     const refetchShipping = async () => {
