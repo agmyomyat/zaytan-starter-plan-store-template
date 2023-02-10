@@ -27,6 +27,7 @@ interface StoreContext {
   updateItem: (item: LineInfoProps) => void
   deleteItem: (lineId: string) => void
   resetCart: () => void
+  lineItemLoading: boolean
 }
 
 const StoreContext = React.createContext<StoreContext | null>(null)
@@ -286,6 +287,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
   return (
     <StoreContext.Provider
       value={{
+        lineItemLoading: addLineItem.isLoading,
         countryCode,
         setRegion,
         addItem,

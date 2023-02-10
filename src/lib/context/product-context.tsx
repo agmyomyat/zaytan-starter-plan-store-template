@@ -24,6 +24,7 @@ interface ProductContext {
   increaseQuantity: () => void
   decreaseQuantity: () => void
   addToCart: () => void
+  lineItemLoading: boolean
 }
 
 const ProductActionContext = createContext<ProductContext | null>(null)
@@ -42,7 +43,7 @@ export const ProductProvider = ({
   const [maxQuantityMet, setMaxQuantityMet] = useState<boolean>(false)
   const [inStock, setInStock] = useState<boolean>(true)
 
-  const { addItem } = useStore()
+  const { addItem, lineItemLoading } = useStore()
   const { cart } = useCart()
   const { variants } = product
 
@@ -161,6 +162,7 @@ export const ProductProvider = ({
         decreaseQuantity,
         increaseQuantity,
         formattedPrice,
+        lineItemLoading,
       }}
     >
       {children}
