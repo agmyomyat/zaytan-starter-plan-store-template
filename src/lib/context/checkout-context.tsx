@@ -19,7 +19,13 @@ import {
   useUpdatePaymentSession,
 } from "medusa-react"
 import { useRouter } from "next/router"
-import React, { createContext, useContext, useEffect, useMemo } from "react"
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { useStore } from "./store-context"
 
@@ -66,6 +72,8 @@ interface CheckoutProviderProps {
 const IDEMPOTENCY_KEY = "create_payment_session_key"
 
 export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
+  const [initializingPaymentSession, setInitializingPaymentSession] =
+    useState(false)
   const {
     cart,
     setCart,
@@ -96,9 +104,10 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
     cart?.id!
   )
 
-  const { shipping_options } = useCartShippingOptions(cart?.id!, {
-    enabled: !!cart?.id,
-  })
+  const { shipping_options, isFetching: fetchingShippingOptions } =
+    useCartShippingOptions(cart?.id!, {
+      enabled: !!cart?.id,
+    })
 
   const { regions } = useRegions()
 
@@ -117,16 +126,22 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
    */
   const isLoading = useMemo(() => {
     return (
+      initializingPaymentSession ||
       addingShippingMethod ||
+      fetchingShippingOptions ||
       settingPaymentSession ||
+      updatingPaymentSession ||
       updatingCart ||
       completingCheckout
     )
   }, [
     addingShippingMethod,
     completingCheckout,
+    fetchingShippingOptions,
+    initializingPaymentSession,
     settingPaymentSession,
     updatingCart,
+    updatingPaymentSession,
   ])
 
   /**
@@ -214,11 +229,13 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
    */
   const initPayment = async () => {
     if (cart?.id && !cart.payment_sessions?.length && cart?.items?.length) {
+      setInitializingPaymentSession(true)
       const paymentSession = await createPaymentSession(cart.id)
 
       if (!paymentSession) {
         setTimeout(initPayment, 500)
       } else {
+        setInitializingPaymentSession(false)
         setCart(paymentSession)
         return
       }
