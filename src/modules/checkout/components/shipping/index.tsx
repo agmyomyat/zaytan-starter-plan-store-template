@@ -28,6 +28,7 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
   const { addShippingMethod, setCart } = useCart()
   const {
     control,
+    setValue,
     setError,
     formState: { errors },
   } = useForm<ShippingFormProps>({
@@ -42,8 +43,8 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
   })
 
   useEffect(() => {
-    console.log("shippingOprionts", shipping_options)
-  }, [shipping_options])
+    setValue("soId", cart.shipping_methods?.[0]?.shipping_option_id)
+  }, [cart.shipping_methods, setValue])
   // Any time the cart changes we need to ensure that we are displaying valid shipping options
   useEffect(() => {
     const refetchShipping = async () => {
@@ -73,6 +74,7 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
   }
 
   const handleChange = (value: string, fn: (value: string) => void) => {
+    console.log(value)
     submitShippingOption(value)
     fn(value)
   }
