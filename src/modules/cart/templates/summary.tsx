@@ -1,3 +1,4 @@
+import { useStore } from "@lib/context/store-context"
 import { Cart } from "@medusajs/medusa"
 import Button from "@modules/common/components/button"
 import CartTotals from "@modules/common/components/cart-totals"
@@ -8,12 +9,18 @@ type SummaryProps = {
 }
 
 const Summary = ({ cart }: SummaryProps) => {
+  const { adjustLineItemLoading, removeLineItemLoading } = useStore()
   return (
     <div className="grid grid-cols-1 gap-y-6">
       <CartTotals cart={cart} />
       <Link href="/checkout">
         <a>
-          <Button>Go to checkout</Button>
+          <Button
+            disabled={adjustLineItemLoading || removeLineItemLoading}
+            isLoading={adjustLineItemLoading || removeLineItemLoading}
+          >
+            Go to checkout
+          </Button>
         </a>
       </Link>
     </div>
