@@ -20,16 +20,16 @@ const Payment = () => {
     let timeout: NodeJS.Timeout | null = null
 
     if (cart?.shipping_address && cart?.payment_sessions) {
-      timeout = setTimeout(() => {
-        initPayment()
-      }, 5000)
+      // timeout = setTimeout(() => {
+      initPayment()
+      // },5000 )
     }
 
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-    }
+    // return () => {
+    //   if (timeout) {
+    //     clearTimeout(timeout)
+    //   }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart])
 
