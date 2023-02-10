@@ -18,7 +18,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
     options,
     inStock,
     variant,
-    lineItemLoading,
+    addLineItemLoading,
   } = useProductActions()
 
   const price = useProductPrice({ id: product.id, variantId: variant?.id })
@@ -89,8 +89,8 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
       </div>
 
       <Button
-        disabled={lineItemLoading}
-        isLoading={lineItemLoading}
+        disabled={addLineItemLoading}
+        isLoading={addLineItemLoading}
         onClick={addToCart}
       >
         {!inStock ? "Out of stock" : "Add to cart"}
