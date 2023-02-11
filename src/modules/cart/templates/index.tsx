@@ -3,7 +3,7 @@ import DiscountCode from "@modules/checkout/components/discount-code"
 import SkeletonCartPage from "@modules/skeletons/templates/skeleton-cart-page"
 import { useCart, useMeCustomer } from "medusa-react"
 import EmptyCartMessage from "../components/empty-cart-message"
-import SignInPrompt from "../components/sign-in-prompt"
+// import SignInPrompt from "../components/sign-in-prompt"
 import ItemsTemplate from "./items"
 import Summary from "./summary"
 
@@ -22,7 +22,7 @@ const CartTemplate = () => {
         {cart.items.length ? (
           <div className="grid grid-cols-1 small:grid-cols-[1fr_360px] gap-x-8">
             <div className="flex flex-col bg-white p-6 gap-y-6">
-              {!customer && <SignInPrompt />}
+              {/* {!customer && <SignInPrompt />} */}
               <ItemsTemplate region={cart?.region} items={items} />
             </div>
             <div className="relative">
@@ -42,7 +42,7 @@ const CartTemplate = () => {
           </div>
         ) : (
           <div>
-            {!customer && <SignInPrompt />}
+            {/* {!customer && <SignInPrompt />} */}
             <EmptyCartMessage />
           </div>
         )}
