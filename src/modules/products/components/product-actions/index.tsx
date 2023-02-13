@@ -89,7 +89,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
       </div>
 
       <Button
-        disabled={addLineItemLoading}
+        disabled={addLineItemLoading || !inStock}
         isLoading={addLineItemLoading}
         onClick={addToCart}
       >
