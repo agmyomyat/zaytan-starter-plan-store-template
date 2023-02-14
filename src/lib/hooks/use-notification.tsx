@@ -11,7 +11,7 @@ const useNotification = () => {
       ),
       {
         position: "top-right",
-        duration: 300000,
+        duration: 3000,
       }
     )
   }
