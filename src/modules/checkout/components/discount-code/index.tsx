@@ -1,4 +1,6 @@
 import { medusaClient } from "@lib/config"
+import { useStore } from "@lib/context/store-context"
+import useNotification from "@lib/hooks/use-notification"
 import { Cart } from "@medusajs/medusa"
 import Button from "@modules/common/components/button"
 import Input from "@modules/common/components/input"
@@ -17,9 +19,11 @@ type DiscountCodeProps = {
 }
 
 const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
+  const { setDiscountLoading } = useStore()
   const { id, discounts, region } = cart
   const { mutate, isLoading } = useUpdateCart(id)
   const { setCart } = useCart()
+  const notification = useNotification()
 
   const { isLoading: mutationLoading, mutate: removeDiscount } = useMutation(
     (payload: { cartId: string; code: string }) => {
@@ -56,13 +60,18 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
   })
 
   const onApply = (data: DiscountFormValues) => {
+    setDiscountLoading(true)
     mutate(
       {
         discounts: [{ code: data.discount_code }],
       },
       {
-        onSuccess: ({ cart }) => setCart(cart),
+        onSuccess: ({ cart }) => {
+          setDiscountLoading(false)
+          setCart(cart)
+        },
         onError: () => {
+          setDiscountLoading(false)
           setError(
             "discount_code",
             {
@@ -72,16 +81,23 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
               shouldFocus: true,
             }
           )
+          notification(
+            "Invalid Code",
+            "your discount code is invalid or expired",
+            "error"
+          )
         },
       }
     )
   }
 
   const onRemove = () => {
+    setDiscountLoading(true)
     removeDiscount(
       { cartId: id, code: discounts[0].code },
       {
         onSuccess: ({ cart }) => {
+          setDiscountLoading(false)
           setCart(cart)
         },
       }

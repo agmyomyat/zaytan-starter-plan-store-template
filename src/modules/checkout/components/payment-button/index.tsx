@@ -1,4 +1,5 @@
 import { useCheckout } from "@lib/context/checkout-context"
+import { useStore } from "@lib/context/store-context"
 import { PaymentSession } from "@medusajs/medusa"
 import Button from "@modules/common/components/button"
 import Spinner from "@modules/common/icons/spinner"
@@ -15,6 +16,7 @@ type PaymentButtonProps = {
 const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
   const [notReady, setNotReady] = useState(true)
   const { cart } = useCart()
+  const { discountLoading } = useStore()
 
   useEffect(() => {
     setNotReady(true)
@@ -48,16 +50,22 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
   switch (paymentSession?.provider_id) {
     case "stripe":
       return (
-        <StripePaymentButton session={paymentSession} notReady={notReady} />
+        <StripePaymentButton
+          session={paymentSession}
+          notReady={notReady || discountLoading}
+        />
       )
     case "manual":
-      return <ManualTestPaymentButton notReady={notReady} />
+      return <ManualTestPaymentButton notReady={notReady || discountLoading} />
     case "paypal":
       return (
-        <PayPalPaymentButton notReady={notReady} session={paymentSession} />
+        <PayPalPaymentButton
+          notReady={notReady || discountLoading}
+          session={paymentSession}
+        />
       )
     case "KbzPay":
-      return <ManualTestPaymentButton notReady={notReady} />
+      return <ManualTestPaymentButton notReady={notReady || discountLoading} />
     default:
       return <Button disabled>Select a payment method</Button>
   }
