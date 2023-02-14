@@ -14,7 +14,7 @@ const ToasterContainer: React.FC<ToasterContainerProps> = ({
   return (
     <div
       className={clsx(
-        "flex items-start bg-gray-700 p-3 border rounded-lg mb-2",
+        "flex items-start bg-gray-900 p-3 border rounded-lg mb-2",
         {
           "animate-enter": visible,
         },
