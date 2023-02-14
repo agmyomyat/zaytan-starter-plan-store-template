@@ -31,6 +31,8 @@ interface StoreContext {
   addLineItemLoading: boolean
   adjustLineItemLoading: boolean
   removeLineItemLoading: boolean
+  discountLoading: boolean
+  setDiscountLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const StoreContext = React.createContext<StoreContext | null>(null)
@@ -51,6 +53,7 @@ const IS_SERVER = typeof window === "undefined"
 const CART_KEY = "medusa_cart_id"
 
 export const StoreProvider = ({ children }: StoreProps) => {
+  const [discountLoading, setDiscountLoading] = useState(false)
   const { cart, setCart, createCart, updateCart } = useCart()
   const [countryCode, setCountryCode] = useState<string | undefined>(undefined)
   const { timedOpen } = useCartDropdown()
@@ -302,6 +305,8 @@ export const StoreProvider = ({ children }: StoreProps) => {
   return (
     <StoreContext.Provider
       value={{
+        discountLoading,
+        setDiscountLoading,
         addLineItemLoading: addLineItem.isLoading,
         countryCode,
         adjustLineItemLoading: adjustLineItem.isLoading,
