@@ -1,4 +1,5 @@
 import { medusaClient } from "@lib/config"
+import useNotification from "@lib/hooks/use-notification"
 import { handleError } from "@lib/util/handle-error"
 import { Region } from "@medusajs/medusa"
 import {
@@ -56,6 +57,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
   const addLineItem = useCreateLineItem(cart?.id!)
   const removeLineItem = useDeleteLineItem(cart?.id!)
   const adjustLineItem = useUpdateLineItem(cart?.id!)
+  const notification = useNotification()
 
   const storeRegion = (regionId: string, countryCode: string) => {
     if (!IS_SERVER) {
@@ -237,8 +239,14 @@ export const StoreProvider = ({ children }: StoreProps) => {
           setCart(cart)
           storeCart(cart.id)
           timedOpen()
+          notification("Success", "successfully added to your bag", "success")
         },
         onError: (error) => {
+          notification(
+            "Error Occured",
+            "Unknown Error Occured Try refreshing the page or try again later",
+            "error"
+          )
           handleError(error)
         },
       }
@@ -254,6 +262,11 @@ export const StoreProvider = ({ children }: StoreProps) => {
         onSuccess: ({ cart }) => {
           setCart(cart)
           storeCart(cart.id)
+          notification(
+            "Success",
+            "successfully removed from your bag",
+            "success"
+          )
         },
         onError: (error) => {
           handleError(error)
