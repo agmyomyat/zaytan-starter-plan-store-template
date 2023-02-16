@@ -6,20 +6,35 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        wave: {
+          "0%": {
+            left: "0%",
+            top: "0",
+          },
+          "100%": {
+            left: "50%",
+            top: "0",
+          },
+        },
+      },
+      animation: {
+        "waving-hand": "wave 0.8s linear infinite alternate",
+      },
       transitionProperty: {
-        "width": "width",
-        "spacing": 'margin, padding',
+        width: "width",
+        spacing: "margin, padding",
       },
       maxWidth: {
         "8xl": "100rem",
       },
       screens: {
         "2xsmall": "320px",
-        "xsmall": "512px",
-        "small": "1024px",
-        "medium": "1280px",
-        "large": "1440px",
-        "xlarge": "1680px",
+        xsmall: "512px",
+        small: "1024px",
+        medium: "1280px",
+        large: "1440px",
+        xlarge: "1680px",
         "2xlarge": "1920px",
       },
       fontFamily: {
