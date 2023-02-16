@@ -1,0 +1,103 @@
+import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react"
+import { Dialog, Transition } from "@headlessui/react"
+import { QRCodeSVG } from "qrcode.react"
+type TQrCodeModal = {
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  qrCode: string
+}
+export default function QrCodeModal(prop: TQrCodeModal) {
+  const cancelButtonRef = useRef(null)
+
+  return (
+    <Transition.Root show={prop.open} as={Fragment}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        initialFocus={cancelButtonRef}
+        onClose={() => null}
+      >
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full justify-center sm:items-center p-0 text-center  items-end sm:p-4 sm:mx-10">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="relative  transform overflow-visible mb-3  text-left transition-all  w-full max-w-lg">
+                <div
+                  onClick={() => prop.setOpen(false)}
+                  className="flex justify-center items-center mb-1 w-full sm:w-12 h-12 rounded-lg sm:rounded-full sm:absolute sm:-top-12 bg-white sm:-right-12 z-20"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1}
+                    stroke="#878684"
+                    className="w-10 h-10 hover:stroke-black hover:cursor-pointer"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+                <div className="flex flex-col rounded-md  shadow-xl justify-center items-center bg-white">
+                  <div className="w-full p-4 rounded-t shadow-[0px_5px_10px_-7px_rgba(0,0,0,0.3)] border-gray-400">
+                    <h3 className="text-start text-sm sm:text-lg text-gray-900">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1}
+                        stroke="currentColor"
+                        className="mr-2 inline w-8 h-8"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      Scan With KBZ Mobile App
+                    </h3>
+                  </div>
+                  <QRCodeSVG
+                    value={prop.qrCode}
+                    className="w-96 h-96 p-10 max-w-full"
+                  />
+                  <Loading />
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
+}
+function Loading() {
+  return (
+    <div className="relative w-full  h-1  rounded">
+      <div className="w-1/2 absolute top-0 h-1 rounded animate-waving-hand bg-gray-700"></div>
+    </div>
+  )
+}
