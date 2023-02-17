@@ -1,17 +1,15 @@
 interface IPaymentCard {
   setMethod: () => void
-  setContinueAction: () => void
   label: string
   method: string
   methodName: string
   children: React.ReactNode
 }
 export default function PaymentCard(prop: IPaymentCard) {
-  const { setContinueAction, setMethod, method, label, methodName } = prop
+  const { setMethod, method, label, methodName } = prop
   return (
     <div
       onClick={() => {
-        setContinueAction()
         setMethod()
       }}
       className={`flex justify-center p-6 rounded-lg  ${
