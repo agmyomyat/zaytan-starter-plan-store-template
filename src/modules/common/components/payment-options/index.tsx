@@ -1,22 +1,22 @@
+import { usePayment } from "@lib/context/payment-context"
 import { Dispatch, SetStateAction, useState } from "react"
 import Button from "../button"
 import CartItemsList from "./components/cart-items-list"
 import PaymentCard from "./components/payment-card"
 interface IPayment {
-  continueAction: () => void
   paymentOptions: {
-    prop: {
-      label: string
-      methodName: string
-      method: string
-      setMethod: () => void
-      setContinueAction: Dispatch<SetStateAction<void>>
-    }
+    label: string
+    methodName: string
     icon: React.ReactNode
   }[]
 }
 export default function Payment(prop: IPayment) {
-  const [state, setState] = useState("app")
+  const {
+    updatingPaymentSession,
+    getPaymentToken,
+    paymentMethod,
+    setPaymentMethod,
+  } = usePayment()
   // const [continueAction, setContinueAction] = useState(prop.continueAction)
   return (
     <div className="absolute min-h-screen w-screen bg-gray-100 flex justify-center">
@@ -61,7 +61,12 @@ export default function Payment(prop: IPayment) {
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-20 justify-center items-center m-6">
             {prop.paymentOptions.map((option, i) => {
               return (
-                <PaymentCard key={i} {...option.prop}>
+                <PaymentCard
+                  key={i}
+                  {...option}
+                  method={paymentMethod}
+                  setMethod={() => setPaymentMethod(option.methodName)}
+                >
                   {option.icon}
                 </PaymentCard>
               )
@@ -136,7 +141,12 @@ export default function Payment(prop: IPayment) {
             </PaymentCard> */}
           </div>
           <div className="flex flex-row justify-center mt-6">
-            <Button onClick={() => prop.continueAction()} className="w-56">
+            <Button
+              isLoading={updatingPaymentSession}
+              disabled={updatingPaymentSession}
+              onClick={getPaymentToken}
+              className="w-56"
+            >
               Continue
             </Button>
           </div>
