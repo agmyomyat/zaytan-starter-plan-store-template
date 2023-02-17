@@ -1,7 +1,5 @@
-import { usePayment } from "@lib/context/payment-context"
 import Payment from "@modules/common/components/payment-options"
-import QrCodeModal from "@modules/payment/kbz/qr-code-modal"
-import { useCart } from "medusa-react"
+import QrCodeModal from "@modules/payment/aya/qr-code-modal"
 function QR() {
   return (
     <svg
@@ -43,7 +41,7 @@ function APP() {
     </svg>
   )
 }
-export default function Kbz() {
+export default function AYA() {
   return (
     <>
       <Payment
@@ -56,7 +54,7 @@ export default function Kbz() {
           {
             icon: <APP />,
             label: "Pay With APP",
-            methodName: "PWA",
+            methodName: "PIN",
           },
         ]}
       ></Payment>
