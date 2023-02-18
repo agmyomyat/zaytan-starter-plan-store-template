@@ -1,12 +1,16 @@
 import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { QRCodeSVG } from "qrcode.react"
-type TQrCodeModal = {
+import clsx from "clsx"
+import { PaymentSteps } from "../aya/pin-modal/modal-content"
+type PaymentModal = {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
+  loading: boolean
   children: React.ReactNode
+  paymentSteps: PaymentSteps
 }
-export default function PaymentModal(prop: TQrCodeModal) {
+export default function PaymentModal(prop: PaymentModal) {
   const cancelButtonRef = useRef(null)
 
   return (
