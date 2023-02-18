@@ -43,22 +43,15 @@ let state = "qr"
 Primary.args = {
   paymentOptions: [
     {
-      prop: {
-	
-        label: "pay with qr",
-        methodName: "qr",
-        setMethod: () => (state = "qr"),
-        state: state,
-      },
+      label: "pay with qr",
+      methodName: "qr",
+
       icon: <QrIcon />,
     },
     {
-      prop: {
-        label: "pay with APP",
-        methodName: "APP",
-        setMethod: () => (state = "APP"),
-        state: state,
-      },
+      label: "pay with APP",
+      methodName: "APP",
+
       icon: <QrIcon />,
     },
   ],

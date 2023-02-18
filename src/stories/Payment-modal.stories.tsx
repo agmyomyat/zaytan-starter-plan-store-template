@@ -43,6 +43,8 @@ export const Modal = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Modal.args = {
   open: true,
+  paymentSteps: "waiting_for_payment",
+  loading: true,
 }
 
 // export const Secondary = Template.bind({});
