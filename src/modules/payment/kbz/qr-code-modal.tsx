@@ -8,7 +8,12 @@ export default function QrCodeModal() {
   const { paymentModal, setPaymentModal } = usePayment()
   const { cart } = useCart()
   return (
-    <PaymentModal open={paymentModal} setOpen={setPaymentModal}>
+    <PaymentModal
+      open={paymentModal}
+      setOpen={setPaymentModal}
+      loading={true}
+      paymentSteps={"waiting_for_payment"}
+    >
       <div className="w-full p-4 rounded-t shadow-[0px_5px_10px_-7px_rgba(0,0,0,0.3)] border-gray-400">
         <h3 className="text-start text-sm sm:text-lg text-gray-900">
           <svg
