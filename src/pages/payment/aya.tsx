@@ -1,5 +1,7 @@
 import Payment from "@modules/common/components/payment-options"
+import PinModal from "@modules/payment/aya/pin-modal"
 import QrCodeModal from "@modules/payment/aya/qr-code-modal"
+import PinModalStory from "stories/Aya-Pin-Modal"
 function QR() {
   return (
     <svg
@@ -59,6 +61,7 @@ export default function AYA() {
         ]}
       ></Payment>
       <QrCodeModal />
+      <PinModal />
     </>
   )
 }
