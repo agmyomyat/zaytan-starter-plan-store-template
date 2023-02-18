@@ -69,7 +69,7 @@ export default function PaymentModal(prop: PaymentModal) {
                 </div>
                 <div className="flex flex-col rounded-md  shadow-xl justify-center items-center bg-white">
                   {prop.children}
-                  <Loading />
+                  {prop.loading && <Loading />}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
