@@ -43,7 +43,10 @@ export default function PaymentModal(prop: TQrCodeModal) {
               <Dialog.Panel className="relative  transform overflow-visible mb-3  text-left transition-all  w-full max-w-lg">
                 <div
                   onClick={() => prop.setOpen(false)}
-                  className="flex justify-center items-center mb-1 w-full sm:w-12 h-12 rounded-lg sm:rounded-full sm:absolute sm:-top-12 bg-white sm:-right-12 z-20"
+                  className={clsx(
+                    "flex justify-center items-center mb-1 w-full sm:w-12 h-12 rounded-lg sm:rounded-full sm:absolute sm:-top-12 bg-white sm:-right-12 z-20",
+                    { hidden: prop.paymentSteps === "waiting_for_payment" }
+                  )}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
