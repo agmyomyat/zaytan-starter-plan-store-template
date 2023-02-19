@@ -1,6 +1,7 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import Payment from "@modules/common/components/payment-options"
+import OptionsContainer from "@modules/common/components/payment-options/components/options-container"
+import PaymentPageStory from "./components/payment-page"
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 function QrIcon() {
   return (
@@ -27,32 +28,34 @@ function QrIcon() {
 }
 export default {
   title: "Payment Container",
-  component: Payment,
+  component: PaymentPageStory,
+  // decorators: [
+  //   (Story) => (
+  //     <MockPaymentProvider>
+  //       <Story />
+  //     </MockPaymentProvider>
+  //   ),
+  // ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  //   argTypes: {
-  //     backgroundColor: { control: 'color' },
-  //   },
-} as ComponentMeta<typeof Payment>
+  // argTypes: {
+  //   paymentMethod:{}
+  // },
+} as ComponentMeta<typeof PaymentPageStory>
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Payment> = (args) => <Payment {...args} />
+const Template: ComponentStory<typeof PaymentPageStory> = (args) => (
+  <PaymentPageStory {...args} />
+)
 
 export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-let state = "qr"
 Primary.args = {
-  paymentOptions: [
-    {
-      label: "pay with qr",
-      methodName: "qr",
-
-      icon: <QrIcon />,
-    },
-    {
-      label: "pay with APP",
-      methodName: "APP",
-
-      icon: <QrIcon />,
-    },
-  ],
+  total: "15000",
+  updatingPaymentSession: false,
+}
+Primary.argTypes = {
+  paymentMethod: {
+    options: ["QR", "APP"],
+    control: { type: "radio" },
+  },
 }

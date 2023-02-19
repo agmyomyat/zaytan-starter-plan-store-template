@@ -1,6 +1,6 @@
 import React from "react"
 import { ComponentStory, ComponentMeta } from "@storybook/react"
-import PinModalStory from "./Aya-Pin-Modal"
+import PinModalStory from "./components/Aya-Pin-Modal"
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
