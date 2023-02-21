@@ -94,14 +94,7 @@ const PaymentElement = ({
           <PaymentStripe />
         </div>
       )
-    case "KbzPay":
-      return <PaymentTest />
-    case "MPU":
-      return <PaymentTest />
-    case "WavePay":
-      return <PaymentTest />
-    case "AyaPay":
-      return <PaymentTest />
+
     case "manual":
       // We only display the test payment form if we are in a development environment
       return process.env.NODE_ENV === "development" ? <PaymentTest /> : null
