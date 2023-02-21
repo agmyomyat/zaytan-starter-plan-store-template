@@ -1,7 +1,15 @@
-export default function CartItemsList() {
+interface CartItemsListProps {
+  items: {
+    name: string
+    quantity: number
+    amount: string
+  }[]
+  shippingTotal: string
+}
+export default function CartItemsList(props: CartItemsListProps) {
   return (
     <div className="bg-white shadow   p-4 sm:p-6 xl:p-8 ">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex  items-center justify-between">
         <div className="flex justify-start gap-3 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +33,13 @@ export default function CartItemsList() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col mt-8">
+      <div className="flex flex-row space-x-2 mt-6">
+        <span className="text-sm">Shipping</span>
+        <span className="text-xs font-semibold self-center mt-[2px]">
+          {props.shippingTotal}
+        </span>
+      </div>
+      <div className="flex flex-col mt-2">
         <div className="overflow-x-auto rounded-lg">
           <div className="align-middle inline-block min-w-full">
             <div className="shadow overflow-hidden sm:rounded-lg">
@@ -53,90 +67,21 @@ export default function CartItemsList() {
                   </tr>
                 </thead>
                 <tbody className="bg-white">
-                  <tr>
-                    <td className="p-4 text-sm font-normal text-gray-900">
-                      Payment from{" "}
-                      <span className="font-semibold">Bonnie Green</span>
-                    </td>
-                    <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                      Apr 23 ,2021
-                    </td>
-                    <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                      $2300
-                    </td>
-                  </tr>
-                  <tr className="bg-gray-50">
-                    <td className="p-4  text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                      Payment refund to{" "}
-                      <span className="font-semibold">#00910</span>
-                    </td>
-                    <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                      Apr 23 ,2021
-                    </td>
-                    <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                      -$670
-                    </td>
-                  </tr>
-                  {/*  <tr>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-			    Payment failed from{' '}
-			    <span className="font-semibold">#087651</span>
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-			    Apr 18 ,2021
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-			    $234
-			  </td>
-			</tr>
-			<tr className="bg-gray-50">
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-			    Payment from{' '}
-			    <span className="font-semibold">Lana Byrd</span>
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-			    Apr 15 ,2021
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-			    $5000
-			  </td>
-			</tr>
-			<tr>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-			    Payment from{' '}
-			    <span className="font-semibold">Jese Leos</span>
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-			    Apr 15 ,2021
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-			    $2300
-			  </td>
-			</tr>
-			<tr className="bg-gray-50">
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-			    Payment from{' '}
-			    <span className="font-semibold">THEMESBERG LLC</span>
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-			    Apr 11 ,2021
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-			    $560
-			  </td>
-			</tr>
-			<tr>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-			    Payment from{' '}
-			    <span className="font-semibold">Lana Lysle</span>
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-			    Apr 6 ,2021
-			  </td>
-			  <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-			    $1437
-			</tr>
-			  </td> */}
+                  {props.items.map((item, i) => {
+                    return (
+                      <tr key={i}>
+                        <td className="p-4 text-sm font-normal text-gray-900">
+                          {item.name}
+                        </td>
+                        <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                          {item.quantity}
+                        </td>
+                        <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                          {item.amount} Kyats
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
