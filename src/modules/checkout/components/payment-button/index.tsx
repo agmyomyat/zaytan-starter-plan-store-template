@@ -7,6 +7,7 @@ import { OnApproveActions, OnApproveData } from "@paypal/paypal-js"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import { useCart } from "medusa-react"
+import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 
 type PaymentButtonProps = {
@@ -65,7 +66,13 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
         />
       )
     case "KbzPay":
-      return <ManualTestPaymentButton notReady={notReady || discountLoading} />
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
+    case "AyaPay":
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
+    case "WavePay":
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
+    case "MPU":
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
     default:
       return <Button disabled>Select a payment method</Button>
   }
@@ -228,6 +235,23 @@ const PayPalPaymentButton = ({
         disabled={notReady || submitting}
       />
     </PayPalScriptProvider>
+  )
+}
+const DingerPaymentButton = ({ notReady }: { notReady: boolean }) => {
+  const [submitting, setSubmitting] = useState(false)
+
+  const { cart } = useCart()
+  const router = useRouter()
+  const handlePayment = () => {
+    if (cart?.payment_session?.provider_id) {
+      setSubmitting(true)
+      router.push(`/payment/${cart.payment_session.provider_id}`)
+    }
+  }
+  return (
+    <Button disabled={submitting || notReady} onClick={handlePayment}>
+      {submitting ? <Spinner /> : "Checkout"}
+    </Button>
   )
 }
 
