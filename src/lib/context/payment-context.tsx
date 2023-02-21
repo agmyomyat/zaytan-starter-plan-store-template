@@ -1,16 +1,27 @@
+import type { Cart } from "@medusajs/medusa"
 import { useCart, useUpdatePaymentSession } from "medusa-react"
 import React, { createContext, useCallback, useContext, useState } from "react"
-interface PaymentContext {
-  paymentMethod: string
-  setPaymentMethod: React.Dispatch<React.SetStateAction<string>>
-  getPaymentToken: () => void
+export type PaymentInfo = {
+  qrCode: string | undefined
+  formToken: string | undefined
+  merchantOrderId: string | undefined
+  trxNumber: string | undefined
+  redirectUrl: string | undefined
+}
+export interface PaymentContext {
+  selectedPaymentMethod: string
+  setSelectedPaymentMethod: React.Dispatch<React.SetStateAction<string>>
+  getPaymentToken: (props: {
+    customerInfo: Record<string, unknown>
+    // to trigger this action after requested payment tokens
+    action: (cart: Omit<Cart, "refundable_amount" | "refunded_total">) => void
+  }) => void
   updatingPaymentSession: boolean
-  paymentModal: boolean
-  setPaymentModal: React.Dispatch<React.SetStateAction<boolean>>
+  paymentInfo: PaymentInfo
 }
 const PaymentContext = createContext<PaymentContext | null>(null)
 
-interface PaymentProviderProps {
+export interface PaymentProviderProps {
   children?: React.ReactNode
 }
 interface PaymentTokenResponse {
@@ -21,45 +32,48 @@ interface PaymentTokenResponse {
   redirectUrl: string
 }
 export const PaymentProvider = ({ children }: PaymentProviderProps) => {
-  const [paymentMethod, setPaymentMethod] = useState("")
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("")
   const { setCart, cart } = useCart()
-  const [paymentModal, setPaymentModal] = useState(false)
   const {
     mutate: updatePaymentSessionMutation,
     isLoading: updatingPaymentSession,
   } = useUpdatePaymentSession(cart?.id!)
-  const getPaymentToken = useCallback(() => {
-    if (!cart || !cart.payment_session)
-      throw new Error("Cart or Payment Session Not found")
-    if (cart && cart.payment_session) {
-      updatePaymentSessionMutation(
-        {
-          data: { cartId: cart.id, paymentMethod: paymentMethod },
-          provider_id: cart.payment_session?.provider_id,
-        },
-        {
-          onSuccess: ({ cart }) => {
-            if (cart.payment_session?.data.qrCode) {
-              setPaymentModal(true)
-            }
-            if (cart.payment_session?.data?.redirectUrl) {
-              const redirect = window.open("", "_blank") as Window
-              redirect.location.href = cart.payment_session.data
-                .redirectUrl as string
-            }
-            setCart(cart)
+  const paymentInfo = cart?.payment_session?.data?.paymentInfo as PaymentInfo
+
+  const getPaymentToken = useCallback(
+    (props: {
+      customerInfo: Record<string, unknown>
+      action: (cart: Omit<Cart, "refundable_amount" | "refunded_total">) => void
+    }) => {
+      if (!cart || !cart.payment_session)
+        throw new Error("Cart or Payment Session Not found")
+      if (cart && cart.payment_session) {
+        updatePaymentSessionMutation(
+          {
+            data: {
+              cartId: cart.id,
+              paymentMethod: selectedPaymentMethod,
+              customerInfo: props.customerInfo || {},
+            },
+            provider_id: cart.payment_session?.provider_id,
           },
-        }
-      )
-    }
-  }, [cart, paymentMethod, setCart, updatePaymentSessionMutation])
+          {
+            onSuccess: ({ cart }) => {
+              setCart(cart)
+              props.action(cart)
+            },
+          }
+        )
+      }
+    },
+    [cart, selectedPaymentMethod, setCart, updatePaymentSessionMutation]
+  )
   return (
     <PaymentContext.Provider
       value={{
-        paymentModal,
-        setPaymentModal,
-        paymentMethod,
-        setPaymentMethod,
+        paymentInfo,
+        selectedPaymentMethod,
+        setSelectedPaymentMethod,
         getPaymentToken,
         updatingPaymentSession,
       }}
