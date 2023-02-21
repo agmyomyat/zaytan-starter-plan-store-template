@@ -22,8 +22,8 @@ const DropdownMenu = () => {
 
   return (
     <div
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      // onMouseEnter={() => setOpen(true)}
+      // onMouseLeave={() => setOpen(false)}
       className="h-full"
     >
       <div className="flex items-center h-full">

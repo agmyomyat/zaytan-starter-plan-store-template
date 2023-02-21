@@ -116,9 +116,9 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
 
   const editAddresses = useToggleState()
   const sameAsBilling = useToggleState(
-    cart?.billing_address && cart?.shipping_address
-      ? isEqual(cart.billing_address, cart.shipping_address)
-      : true
+    // cart?.billing_address && cart?.shipping_address
+    //   ? isEqual(cart.billing_address, cart.shipping_address)
+    true
   )
 
   /**

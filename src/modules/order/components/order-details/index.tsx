@@ -27,7 +27,7 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
         {showStatus && (
           <>
             <span>{formatStatus(order.fulfillment_status)}</span>
-            <span>{formatStatus(order.payment_status)}</span>
+            {/* <span>{formatStatus(order.payment_status)}</span> */}
           </>
         )}
       </div>

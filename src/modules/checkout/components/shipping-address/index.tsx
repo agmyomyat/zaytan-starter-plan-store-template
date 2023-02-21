@@ -31,17 +31,17 @@ const ShippingAddress = () => {
               errors={errors}
               touched={touchedFields}
             />
-            <div className="grid grid-cols-2 gap-x-2">
-              <Input
-                label="First name"
-                {...register("shipping_address.first_name", {
-                  required: "First name is required",
-                })}
-                autoComplete="given-name"
-                errors={errors}
-                touched={touchedFields}
-              />
-              <Input
+            {/* <div className="grid grid-cols-2 gap-x-2"> */}
+            <Input
+              label="Name"
+              {...register("shipping_address.first_name", {
+                required: "Name is required",
+              })}
+              autoComplete="given-name"
+              errors={errors}
+              touched={touchedFields}
+            />
+            {/* <Input
                 label="Last name"
                 {...register("shipping_address.last_name", {
                   required: "Last name is required",
@@ -49,15 +49,15 @@ const ShippingAddress = () => {
                 autoComplete="family-name"
                 errors={errors}
                 touched={touchedFields}
-              />
-            </div>
-            <Input
+              /> */}
+            {/* </div> */}
+            {/* <Input
               label="Company"
               {...register("shipping_address.company")}
               autoComplete="organization"
               errors={errors}
               touched={touchedFields}
-            />
+            /> */}
             <Input
               label="Address"
               {...register("shipping_address.address_1", {
@@ -74,8 +74,8 @@ const ShippingAddress = () => {
               errors={errors}
               touched={touchedFields}
             />
-            <div className="grid grid-cols-[122px_1fr] gap-x-2">
-              <Input
+            {/* <div className="grid grid-cols-[122px_1fr] gap-x-2"> */}
+            {/* <Input
                 label="Postal code"
                 {...register("shipping_address.postal_code", {
                   required: "Postal code is required",
@@ -83,17 +83,17 @@ const ShippingAddress = () => {
                 autoComplete="postal-code"
                 errors={errors}
                 touched={touchedFields}
-              />
-              <Input
-                label="City"
-                {...register("shipping_address.city", {
-                  required: "City is required",
-                })}
-                autoComplete="address-level2"
-                errors={errors}
-                touched={touchedFields}
-              />
-            </div>
+              /> */}
+            <Input
+              label="City"
+              {...register("shipping_address.city", {
+                required: "City is required",
+              })}
+              autoComplete="address-level2"
+              errors={errors}
+              touched={touchedFields}
+            />
+            {/* </div> */}
             <CountrySelect
               {...register("shipping_address.country_code", {
                 required: "Country is required",
@@ -111,7 +111,17 @@ const ShippingAddress = () => {
             />
             <Input
               label="Phone"
-              {...register("shipping_address.phone")}
+              {...register("shipping_address.phone", {
+                required: "Phone is required",
+                maxLength: {
+                  value: 11,
+                  message: "Phone number must be 11 characters",
+                },
+                minLength: {
+                  value: 11,
+                  message: "Phone number must be 11 characters",
+                },
+              })}
               autoComplete="tel"
               errors={errors}
               touched={touchedFields}

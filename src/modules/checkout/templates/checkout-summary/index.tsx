@@ -1,5 +1,5 @@
 import DiscountCode from "@modules/checkout/components/discount-code"
-import GiftCard from "@modules/checkout/components/gift-card"
+// import GiftCard from "@modules/checkout/components/gift-card"
 import PaymentButton from "@modules/checkout/components/payment-button"
 import CartTotals from "@modules/common/components/cart-totals"
 import { useCart } from "medusa-react"
@@ -20,7 +20,7 @@ const CheckoutSummary = () => {
       <div className="p-6 bg-white">
         <DiscountCode cart={cart} />
       </div>
-      <GiftCard cart={cart} />
+      {/* <GiftCard cart={cart} /> */}
     </div>
   )
 }

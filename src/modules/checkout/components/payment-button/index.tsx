@@ -1,4 +1,5 @@
 import { useCheckout } from "@lib/context/checkout-context"
+import { useStore } from "@lib/context/store-context"
 import { PaymentSession } from "@medusajs/medusa"
 import Button from "@modules/common/components/button"
 import Spinner from "@modules/common/icons/spinner"
@@ -6,6 +7,7 @@ import { OnApproveActions, OnApproveData } from "@paypal/paypal-js"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import { useCart } from "medusa-react"
+import { useRouter } from "next/router"
 import React, { useEffect, useState } from "react"
 
 type PaymentButtonProps = {
@@ -15,6 +17,7 @@ type PaymentButtonProps = {
 const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
   const [notReady, setNotReady] = useState(true)
   const { cart } = useCart()
+  const { discountLoading } = useStore()
 
   useEffect(() => {
     setNotReady(true)
@@ -48,16 +51,28 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
   switch (paymentSession?.provider_id) {
     case "stripe":
       return (
-        <StripePaymentButton session={paymentSession} notReady={notReady} />
+        <StripePaymentButton
+          session={paymentSession}
+          notReady={notReady || discountLoading}
+        />
       )
     case "manual":
-      return <ManualTestPaymentButton notReady={notReady} />
+      return <ManualTestPaymentButton notReady={notReady || discountLoading} />
     case "paypal":
       return (
-        <PayPalPaymentButton notReady={notReady} session={paymentSession} />
+        <PayPalPaymentButton
+          notReady={notReady || discountLoading}
+          session={paymentSession}
+        />
       )
     case "KbzPay":
-      return <ManualTestPaymentButton notReady={notReady} />
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
+    case "AyaPay":
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
+    case "WavePay":
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
+    case "MPU":
+      return <DingerPaymentButton notReady={notReady || discountLoading} />
     default:
       return <Button disabled>Select a payment method</Button>
   }
@@ -220,6 +235,23 @@ const PayPalPaymentButton = ({
         disabled={notReady || submitting}
       />
     </PayPalScriptProvider>
+  )
+}
+const DingerPaymentButton = ({ notReady }: { notReady: boolean }) => {
+  const [submitting, setSubmitting] = useState(false)
+
+  const { cart } = useCart()
+  const router = useRouter()
+  const handlePayment = () => {
+    if (cart?.payment_session?.provider_id) {
+      setSubmitting(true)
+      router.push(`/payment/${cart.payment_session.provider_id}`)
+    }
+  }
+  return (
+    <Button disabled={submitting || notReady} onClick={handlePayment}>
+      {submitting ? <Spinner /> : "Checkout"}
+    </Button>
   )
 }
 

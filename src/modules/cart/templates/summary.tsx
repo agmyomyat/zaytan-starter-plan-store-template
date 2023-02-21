@@ -9,15 +9,20 @@ type SummaryProps = {
 }
 
 const Summary = ({ cart }: SummaryProps) => {
-  const { adjustLineItemLoading, removeLineItemLoading } = useStore()
+  const { adjustLineItemLoading, removeLineItemLoading, discountLoading } =
+    useStore()
   return (
     <div className="grid grid-cols-1 gap-y-6">
       <CartTotals cart={cart} />
       <Link href="/checkout">
         <a>
           <Button
-            disabled={adjustLineItemLoading || removeLineItemLoading}
-            isLoading={adjustLineItemLoading || removeLineItemLoading}
+            disabled={
+              adjustLineItemLoading || removeLineItemLoading || discountLoading
+            }
+            isLoading={
+              adjustLineItemLoading || removeLineItemLoading || discountLoading
+            }
           >
             Go to checkout
           </Button>

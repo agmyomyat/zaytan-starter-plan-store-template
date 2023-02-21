@@ -4,7 +4,7 @@ import Button from "@modules/common/components/button"
 import OptionSelect from "@modules/products/components/option-select"
 import clsx from "clsx"
 import Link from "next/link"
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { Product } from "types/medusa"
 
 type ProductActionsProps = {
@@ -22,7 +22,11 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
   } = useProductActions()
 
   const price = useProductPrice({ id: product.id, variantId: variant?.id })
-
+  const variantAvailabilityStatus = useMemo(() => {
+    if (!variant) return "Not Available"
+    if (!inStock) return "Out of Stock"
+    return "Add to cart"
+  }, [inStock, variant])
   const selectedPrice = useMemo(() => {
     const { variantPrice, cheapestPrice } = price
 
@@ -89,11 +93,11 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
       </div>
 
       <Button
-        disabled={addLineItemLoading}
+        disabled={addLineItemLoading || !inStock || !variant}
         isLoading={addLineItemLoading}
         onClick={addToCart}
       >
-        {!inStock ? "Out of stock" : "Add to cart"}
+        {variantAvailabilityStatus}
       </Button>
     </div>
   )
