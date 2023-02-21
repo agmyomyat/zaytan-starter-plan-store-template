@@ -1,3 +1,4 @@
+import { usePayment } from "@lib/context/payment-context"
 import Button from "@modules/common/components/button"
 import Input from "@modules/common/components/input"
 import PhoneIcon from "@modules/common/icons/phone-icon"
@@ -14,6 +15,7 @@ export default function ModalContent(
     paymentSteps: PaymentSteps
   }
 ) {
+  const { updatingPaymentSession } = usePayment()
   return (
     <div className="w-full p-4 rounded-t shadow-[0px_5px_10px_-7px_rgba(0,0,0,0.3)] border-gray-400 space-y-4">
       <div className="flex flex-row">
@@ -39,6 +41,8 @@ export default function ModalContent(
               <Button
                 type="submit"
                 className="!min-h-[0] h-11 w-[80px] text-base"
+                isLoading={updatingPaymentSession}
+                disabled={updatingPaymentSession}
               >
                 Continue
               </Button>
