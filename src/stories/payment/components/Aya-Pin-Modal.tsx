@@ -51,7 +51,7 @@ export default function PinModalStory(props: {
       loading={props.loading}
       open={props.open}
       setOpen={props.setOpen}
-      paymentSteps={props.paymentSteps}
+      hideCloseButton={props.paymentSteps === "waiting_for_payment"}
     >
       <ModalContent
         {...form}

@@ -1,8 +1,15 @@
+import { queryClient } from "@lib/config"
+import { CartDropdownProvider } from "@lib/context/cart-dropdown-context"
+import { MobileMenuProvider } from "@lib/context/mobile-menu-context"
+import { StoreProvider } from "@lib/context/store-context"
 import CartItemsList from "@modules/common/components/payment-options/components/cart-items-list"
 import OptionsContainer, {
   OptionsContainerProps,
 } from "@modules/common/components/payment-options/components/options-container"
 import PaymentCard from "@modules/common/components/payment-options/components/payment-card"
+import APP from "@modules/common/icons/app-icon"
+import Layout from "@modules/layout/templates"
+import { CartProvider, MedusaProvider } from "medusa-react"
 function QrIcon() {
   return (
     <svg
@@ -37,7 +44,7 @@ const mockPaymentOptions = [
     label: "pay with APP",
     methodName: "APP",
 
-    icon: <QrIcon />,
+    icon: <APP />,
   },
 ]
 interface PaymentCardProps {
