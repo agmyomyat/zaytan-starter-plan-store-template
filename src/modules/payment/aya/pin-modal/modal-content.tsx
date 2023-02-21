@@ -28,13 +28,9 @@ export default function ModalContent(
         <form onSubmit={props.handleSubmit(props.onApply)}>
           <div className="grid grid-cols-[1fr_100px] gap-x-2">
             <Input
-              label="Phone Number"
+              label="Phone Number (09***)"
               {...props.register("phoneNumber", {
                 required: "Enter Your Phone Number",
-                minLength: {
-                  value: 11,
-                  message: "Your Phone Number Must Be 11 Characters",
-                },
               })}
               errors={props.formState.errors.phoneNumber}
               defaultValue={props.defaultValue}
