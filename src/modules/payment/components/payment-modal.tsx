@@ -8,7 +8,7 @@ type PaymentModal = {
   setOpen: Dispatch<SetStateAction<boolean>>
   loading: boolean
   children: React.ReactNode
-  paymentSteps: PaymentSteps
+  hideCloseButton: boolean
 }
 export default function PaymentModal(prop: PaymentModal) {
   const cancelButtonRef = useRef(null)
@@ -49,7 +49,7 @@ export default function PaymentModal(prop: PaymentModal) {
                   onClick={() => prop.setOpen(false)}
                   className={clsx(
                     "flex justify-center items-center mb-1 w-full sm:w-12 h-12 rounded-lg sm:rounded-full sm:absolute sm:-top-12 bg-white sm:-right-12 z-20",
-                    { hidden: prop.paymentSteps === "waiting_for_payment" }
+                    { hidden: prop.hideCloseButton }
                   )}
                 >
                   <svg
