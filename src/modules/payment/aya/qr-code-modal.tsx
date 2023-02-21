@@ -1,13 +1,22 @@
 import { usePayment } from "@lib/context/payment-context"
 import { useCart } from "medusa-react"
 import { QRCodeSVG } from "qrcode.react"
+import { Dispatch, SetStateAction } from "react"
 import PaymentModal from "../components/payment-modal"
 
-export default function QrCodeModal() {
-  const { paymentModal, setPaymentModal } = usePayment()
+export default function AyaQrCodeModal(props: {
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+}) {
+  const { paymentInfo } = usePayment()
   const { cart } = useCart()
   return (
-    <PaymentModal open={paymentModal} setOpen={setPaymentModal}>
+    <PaymentModal
+      hideCloseButton={true}
+      loading={true}
+      open={props.open}
+      setOpen={props.setOpen}
+    >
       <div className="w-full p-4 rounded-t shadow-[0px_5px_10px_-7px_rgba(0,0,0,0.3)] border-gray-400">
         <h3 className="text-start text-sm sm:text-lg text-gray-900">
           <svg
@@ -28,7 +37,7 @@ export default function QrCodeModal() {
         </h3>
       </div>
       <QRCodeSVG
-        value={cart?.payment_session?.data.qrCode as string}
+        value={paymentInfo?.qrCode || ""}
         className="w-96 h-96 p-10 max-w-full"
       />
     </PaymentModal>
