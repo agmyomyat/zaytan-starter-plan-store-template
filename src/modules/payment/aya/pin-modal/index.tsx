@@ -1,12 +1,18 @@
 import { usePayment } from "@lib/context/payment-context"
+import useNotification from "@lib/hooks/use-notification"
 import { useCart } from "medusa-react"
-import { useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import PaymentModal from "../../components/payment-modal"
-import ModalContent, { AyaPinFormValues } from "./modal-content"
+import ModalContent, { AyaPinFormValues, PaymentSteps } from "./modal-content"
 
-export default function PinModal() {
-  const { paymentModal, setPaymentModal } = usePayment()
+export default function PinModal(props: {
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  continueAction: (data: AyaPinFormValues) => void
+}) {
+  const [paymentSteps, setPaymentSteps] = useState<PaymentSteps>("phone_info")
+  const notification = useNotification()
   const form = useForm<AyaPinFormValues>({
     defaultValues: {
       phoneNumber: "",
@@ -22,19 +28,33 @@ export default function PinModal() {
     control: form.control,
     name: "phoneNumber",
   })
-  const onApply = (data: AyaPinFormValues) => {
-    // setSubmitting(true)
-    // setError(undefined)
+  const onContinue = (data: AyaPinFormValues) => {
+    const phoneNumber = parseInt(data.phoneNumber)
+    if (
+      data.phoneNumber.length !== 11 ||
+      Number.isNaN(phoneNumber) ||
+      phoneNumber.toString().length !== 10
+    ) {
+      return notification("Invalid", "Invalid Phone Number", "error")
+    }
 
-    // if (data.old_password === data.new_password) {
-    //   setSubmitting(false)
-    //   setError("New password must be different from old password.")
-    return
+    props.continueAction(data)
+    setPaymentSteps("waiting_for_payment")
   }
   const { cart } = useCart()
   return (
-    <PaymentModal open={true} setOpen={setPaymentModal}>
-      <ModalContent {...form} defaultValue={phoneNumber} onApply={onApply} />
+    <PaymentModal
+      loading={paymentSteps === "waiting_for_payment"}
+      hideCloseButton={paymentSteps === "waiting_for_payment"}
+      open={props.open}
+      setOpen={props.setOpen}
+    >
+      <ModalContent
+        {...form}
+        defaultValue={phoneNumber}
+        onApply={onContinue}
+        paymentSteps={paymentSteps}
+      />
     </PaymentModal>
   )
 }
