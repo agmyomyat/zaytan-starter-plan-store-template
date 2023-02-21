@@ -113,6 +113,10 @@ const ShippingAddress = () => {
               label="Phone"
               {...register("shipping_address.phone", {
                 required: "Phone is required",
+                maxLength: {
+                  value: 11,
+                  message: "Phone number must be 11 characters",
+                },
                 minLength: {
                   value: 11,
                   message: "Phone number must be 11 characters",
