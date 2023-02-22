@@ -12,6 +12,7 @@ export default function PinModal(props: {
   continueAction: (data: AyaPinFormValues) => void
 }) {
   const [paymentSteps, setPaymentSteps] = useState<PaymentSteps>("phone_info")
+  const { updatingPaymentSession } = usePayment()
   const notification = useNotification()
   const form = useForm<AyaPinFormValues>({
     defaultValues: {
@@ -54,6 +55,8 @@ export default function PinModal(props: {
         defaultValue={phoneNumber}
         onApply={onContinue}
         paymentSteps={paymentSteps}
+        buttonDisable={updatingPaymentSession}
+        buttonLoading={updatingPaymentSession}
       />
     </PaymentModal>
   )

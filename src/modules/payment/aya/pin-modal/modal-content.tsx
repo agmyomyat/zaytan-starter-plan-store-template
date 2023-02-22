@@ -13,9 +13,10 @@ export default function ModalContent(
     defaultValue: string
     onApply: (data: AyaPinFormValues) => void
     paymentSteps: PaymentSteps
+    buttonLoading: boolean
+    buttonDisable: boolean
   }
 ) {
-  const { updatingPaymentSession } = usePayment()
   return (
     <div className="w-full p-4 rounded-t shadow-[0px_5px_10px_-7px_rgba(0,0,0,0.3)] border-gray-400 space-y-4">
       <div className="flex flex-row">
@@ -41,8 +42,8 @@ export default function ModalContent(
               <Button
                 type="submit"
                 className="!min-h-[0] h-11 w-[80px] text-base"
-                isLoading={updatingPaymentSession}
-                disabled={updatingPaymentSession}
+                isLoading={props.buttonLoading}
+                disabled={props.buttonDisable}
               >
                 Continue
               </Button>
