@@ -16,6 +16,8 @@ export default function PinModalStory(props: {
   setOpen: () => void
   paymentSteps: PaymentSteps
   loading: boolean
+  buttonLoading: boolean
+  buttonDisable: boolean
 }) {
   const [loading, setLoading] = useState(false)
   // const [paymentSteps, setPaymentSteps] = useState<PaymentSteps>(
@@ -56,6 +58,8 @@ export default function PinModalStory(props: {
       <ModalContent
         {...form}
         onApply={onApply}
+        buttonDisable={props.buttonDisable}
+        buttonLoading={props.buttonLoading}
         defaultValue={phoneNumber}
         paymentSteps={props.paymentSteps}
       />
