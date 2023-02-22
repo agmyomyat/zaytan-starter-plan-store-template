@@ -8,8 +8,12 @@ const iconsType = {
   OTP: "OTP",
 } as const
 export function GenerateIcon(props: { paymentMethod: string }) {
-  if (props.paymentMethod === iconsType.QR) {
-    return <QR />
+  switch (props.paymentMethod) {
+    case iconsType.QR:
+      return <QR />
+    case iconsType.OTP:
+    case iconsType.PIN:
+    case iconsType.PWA:
+      return <APP />
   }
-  return <APP />
 }

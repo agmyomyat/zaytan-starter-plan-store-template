@@ -66,11 +66,8 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
         />
       )
     case "KbzPay":
-      return <DingerPaymentButton notReady={notReady || discountLoading} />
     case "AyaPay":
-      return <DingerPaymentButton notReady={notReady || discountLoading} />
     case "WavePay":
-      return <DingerPaymentButton notReady={notReady || discountLoading} />
     case "MPU":
       return <DingerPaymentButton notReady={notReady || discountLoading} />
     default:
