@@ -85,7 +85,9 @@ export default function PaymentPageStory(
       <OptionsContainer
         {...props}
         PaymentCards={<PaymentCards paymentMethod={props.paymentMethod} />}
-        CartItemsList={<CartItemsList items={mockItems} />}
+        CartItemsList={
+          <CartItemsList items={mockItems} shippingTotal="10000" />
+        }
       />
     </div>
   )
