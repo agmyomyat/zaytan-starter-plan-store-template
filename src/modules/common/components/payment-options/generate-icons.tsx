@@ -15,5 +15,7 @@ export function GenerateIcon(props: { paymentMethod: string }) {
     case iconsType.PIN:
     case iconsType.PWA:
       return <APP />
+    default:
+      return <div> paymentMethod icon not found</div>
   }
 }
