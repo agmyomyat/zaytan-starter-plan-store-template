@@ -44,7 +44,7 @@ export default function MPU() {
           paymentContinue={() =>
             getPaymentToken({
               customerInfo: {},
-              action: (cart) => paymentPagecontinue(cart),
+              onSuccessAction: (cart) => paymentPagecontinue(cart),
             })
           }
           paymentOptions={paymentOptions}

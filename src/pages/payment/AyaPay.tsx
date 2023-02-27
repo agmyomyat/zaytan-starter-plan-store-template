@@ -26,7 +26,7 @@ export default function AyaPay() {
     if (selectedPaymentMethod === AyaPaymentMethods.QR) {
       return getPaymentToken({
         customerInfo: {},
-        action: (cart) => {
+        onSuccessAction: (cart) => {
           const _paymentInfo = cart?.payment_session?.data
             ?.paymentInfo as PaymentInfo
           if (_paymentInfo?.qrCode) {
@@ -43,7 +43,7 @@ export default function AyaPay() {
     (data: AyaPinFormValues) => {
       getPaymentToken({
         customerInfo: { phoneNumber: data.phoneNumber },
-        action: () => {
+        onSuccessAction: () => {
           return
         },
       })
