@@ -4,13 +4,16 @@ import { QRCodeSVG } from "qrcode.react"
 import PaymentModal from "../components/payment-modal"
 import { usePayment } from "@lib/context/payment-context"
 import { useCart } from "medusa-react"
-export default function KbzQrCodeModal() {
-  const { paymentInfo, paymentModal, setPaymentModal } = usePayment()
+export default function KbzQrCodeModal(props: {
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+}) {
+  const { paymentInfo } = usePayment()
   const { cart } = useCart()
   return (
     <PaymentModal
-      open={paymentModal}
-      setOpen={setPaymentModal}
+      open={props.open}
+      setOpen={props.setOpen}
       loading={true}
       hideCloseButton={true}
     >
