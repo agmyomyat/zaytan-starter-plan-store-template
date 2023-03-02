@@ -55,8 +55,10 @@ export const PaymentProvider = ({ children }: PaymentProviderProps) => {
         updatePaymentSessionMutation(
           {
             data: {
-              cartId: cart.id,
-              paymentMethod: selectedPaymentMethod,
+              requestPayment: {
+                cartId: cart.id,
+                paymentMethod: selectedPaymentMethod,
+              },
               customerInfo: props.customerInfo || {},
             },
             provider_id: cart.payment_session?.provider_id,
