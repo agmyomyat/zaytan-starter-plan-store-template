@@ -17,10 +17,6 @@ const PaymentInfoMap: Record<string, { title: string; description: string }> = {
     title: "Mytel Pay",
     description: "Pay with Mytel Mobile Wallet",
   },
-  OkDollar: {
-    title: "Ok Dollar",
-    description: "Pay with OK$ Mobile Wallet",
-  },
   MPTPay: {
     title: "MPT Pay",
     description: "Pay with MPT Mobile Wallet",
