@@ -4,17 +4,20 @@ import { useCart } from "medusa-react"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import PaymentModal from "../../components/payment-modal"
-import ModalContent, { AyaPinFormValues, PaymentSteps } from "./modal-content"
+import ModalContent, {
+  OnePayPinFormValues,
+  PaymentSteps,
+} from "./modal-content"
 
-export default function AyaPinModal(props: {
+export default function OnePayPinModal(props: {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
-  continueAction: (data: AyaPinFormValues) => void
+  continueAction: (data: OnePayPinFormValues) => void
 }) {
   const [paymentSteps, setPaymentSteps] = useState<PaymentSteps>("phone_info")
   const { updatingPaymentSession } = usePayment()
   const notification = useNotification()
-  const form = useForm<AyaPinFormValues>({
+  const form = useForm<OnePayPinFormValues>({
     defaultValues: {
       phoneNumber: "",
     },
@@ -29,7 +32,7 @@ export default function AyaPinModal(props: {
     control: form.control,
     name: "phoneNumber",
   })
-  const onContinue = (data: AyaPinFormValues) => {
+  const onContinue = (data: OnePayPinFormValues) => {
     const phoneNumber = parseInt(data.phoneNumber)
     if (
       data.phoneNumber.length !== 11 ||

@@ -1,46 +1,31 @@
-import { PaymentInfo, usePayment } from "@lib/context/payment-context"
-import useNotification from "@lib/hooks/use-notification"
+import { usePayment } from "@lib/context/payment-context"
 import PaymentPage from "@modules/common/components/payment-options"
 import { GenerateIcon } from "@modules/common/components/payment-options/generate-icons"
 import Layout from "@modules/layout/templates"
-import AyaPinModal from "@modules/payment/aya/pin-modal"
-import { AyaPinFormValues } from "@modules/payment/aya/pin-modal/modal-content"
-import AyaQrCodeModal from "@modules/payment/aya/qr-code-modal"
+import OnePayPinModal from "@modules/payment/onepay/pin-modal"
+import { OnePayPinFormValues } from "@modules/payment/onepay/pin-modal/modal-content"
+
 import { useCart } from "medusa-react"
 import { useRouter } from "next/router"
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react"
-const AyaPaymentMethods = {
-  QR: "QR",
+import { ReactElement, useCallback, useMemo, useState } from "react"
+const OnePayMethods = {
   PIN: "PIN",
 } as const
-export default function AyaPay() {
+export default function OnePay() {
   const { cart } = useCart()
   const [qrModal, setQrModal] = useState(false)
   const [pinModal, setPinModal] = useState(false)
-  const notification = useNotification()
   const { selectedPaymentMethod, getPaymentToken } = usePayment()
   const router = useRouter()
   const paymentMethods =
     (cart?.payment_session?.data?.paymentMethods as string[]) || undefined
   const paymentPagecontinue = useCallback(() => {
-    if (selectedPaymentMethod === AyaPaymentMethods.QR) {
-      return getPaymentToken({
-        customerInfo: {},
-        onSuccessAction: (cart) => {
-          const _paymentInfo = cart?.payment_session?.data
-            ?.paymentInfo as PaymentInfo
-          if (_paymentInfo?.qrCode) {
-            return setQrModal(true)
-          }
-        },
-      })
-    }
-    if (selectedPaymentMethod === AyaPaymentMethods.PIN) {
+    if (selectedPaymentMethod === OnePayMethods.PIN) {
       setPinModal(true)
     }
-  }, [getPaymentToken, selectedPaymentMethod])
+  }, [selectedPaymentMethod])
   const pinModalContinueAction = useCallback(
-    (data: AyaPinFormValues) => {
+    (data: OnePayPinFormValues) => {
       getPaymentToken({
         customerInfo: { phoneNumber: data.phoneNumber },
         onSuccessAction: () => {
@@ -68,8 +53,7 @@ export default function AyaPay() {
           paymentOptions={paymentOptions}
         ></PaymentPage>
       )}
-      <AyaQrCodeModal open={qrModal} setOpen={setQrModal} />
-      <AyaPinModal
+      <OnePayPinModal
         open={pinModal}
         setOpen={setPinModal}
         continueAction={pinModalContinueAction}
@@ -77,6 +61,6 @@ export default function AyaPay() {
     </>
   )
 }
-AyaPay.getLayout = (page: ReactElement) => {
+OnePay.getLayout = (page: ReactElement) => {
   return <Layout>{page}</Layout>
 }

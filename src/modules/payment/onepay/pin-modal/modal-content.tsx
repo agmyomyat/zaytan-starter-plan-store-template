@@ -5,13 +5,13 @@ import PhoneIcon from "@modules/common/icons/phone-icon"
 import { useEffect } from "react"
 import { UseFormReturn } from "react-hook-form"
 
-export type AyaPinFormValues = { phoneNumber: string }
+export type OnePayPinFormValues = { phoneNumber: string }
 export type PaymentSteps = "phone_info" | "waiting_for_payment"
 // const PaymentSteps = "phone_info" || "waiting_for_payment" as const
 export default function ModalContent(
-  props: UseFormReturn<AyaPinFormValues, any> & {
+  props: UseFormReturn<OnePayPinFormValues, any> & {
     defaultValue: string
-    onApply: (data: AyaPinFormValues) => void
+    onApply: (data: OnePayPinFormValues) => void
     paymentSteps: PaymentSteps
     buttonLoading: boolean
     buttonDisable: boolean
@@ -23,7 +23,7 @@ export default function ModalContent(
         <PhoneIcon className="mr-2 inline" />
         <h3 className="text-start text-sm sm:text-xl font-semibold text-gray-900">
           {props.paymentSteps === "phone_info"
-            ? "Enter Your Aya Pay Phone Number"
+            ? "Enter Your One Pay Phone Number"
             : "Waiting for your Payment"}
         </h3>
       </div>
@@ -53,7 +53,7 @@ export default function ModalContent(
       )}
       {props.paymentSteps === "waiting_for_payment" && (
         <h1 className="m-2 ml-10 pb-2 text-sm sm:text-lg">
-          Please check your AyaPay App for Notification
+          Please check your OnePay App for Notification
         </h1>
       )}
     </div>

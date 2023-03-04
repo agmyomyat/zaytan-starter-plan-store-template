@@ -14,7 +14,9 @@ export interface PaymentContext {
   getPaymentToken: (props: {
     customerInfo: Record<string, unknown>
     // to trigger this action after requested payment tokens
-    action: (cart: Omit<Cart, "refundable_amount" | "refunded_total">) => void
+    onSuccessAction: (
+      cart: Omit<Cart, "refundable_amount" | "refunded_total">
+    ) => void
   }) => void
   updatingPaymentSession: boolean
   paymentInfo: PaymentInfo
@@ -43,7 +45,9 @@ export const PaymentProvider = ({ children }: PaymentProviderProps) => {
   const getPaymentToken = useCallback(
     (props: {
       customerInfo: Record<string, unknown>
-      action: (cart: Omit<Cart, "refundable_amount" | "refunded_total">) => void
+      onSuccessAction: (
+        cart: Omit<Cart, "refundable_amount" | "refunded_total">
+      ) => void
     }) => {
       if (!cart || !cart.payment_session)
         throw new Error("Cart or Payment Session Not found")
@@ -51,8 +55,10 @@ export const PaymentProvider = ({ children }: PaymentProviderProps) => {
         updatePaymentSessionMutation(
           {
             data: {
-              cartId: cart.id,
-              paymentMethod: selectedPaymentMethod,
+              requestPayment: {
+                cartId: cart.id,
+                paymentMethod: selectedPaymentMethod,
+              },
               customerInfo: props.customerInfo || {},
             },
             provider_id: cart.payment_session?.provider_id,
@@ -60,7 +66,7 @@ export const PaymentProvider = ({ children }: PaymentProviderProps) => {
           {
             onSuccess: ({ cart }) => {
               setCart(cart)
-              props.action(cart)
+              props.onSuccessAction(cart)
             },
           }
         )

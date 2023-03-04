@@ -1,35 +1,24 @@
 import { PaymentInfo, usePayment } from "@lib/context/payment-context"
-import useNotification from "@lib/hooks/use-notification"
 import type { Cart } from "@medusajs/medusa"
 import PaymentPage from "@modules/common/components/payment-options"
 import { GenerateIcon } from "@modules/common/components/payment-options/generate-icons"
 import Layout from "@modules/layout/templates"
-import KbzQrCodeModal from "@modules/payment/kbz/qr-code-modal"
 import { useCart } from "medusa-react"
-import { useRouter } from "next/router"
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react"
-const KbzPaymentMethods = {
-  QR: "QR",
-  PWA: "PWA",
+import { ReactElement, useCallback, useMemo } from "react"
+const MptPayMethods = {
+  PIN: "PIN",
 } as const
-export default function KbzPay() {
+export default function MPTPay() {
   const { cart } = useCart()
-  const notification = useNotification()
-  const [qrModal, setQrModal] = useState(false)
   const { selectedPaymentMethod, getPaymentToken } = usePayment()
-  const router = useRouter()
   const paymentMethods =
     (cart?.payment_session?.data?.paymentMethods as string[]) || undefined
   const action = useCallback(
     (cart: Omit<Cart, "refundable_amount" | "refunded_total">) => {
       const _paymentInfo = cart?.payment_session?.data
         ?.paymentInfo as PaymentInfo
-      if (selectedPaymentMethod === KbzPaymentMethods.QR) {
-        if (_paymentInfo?.qrCode) {
-          return setQrModal(true)
-        }
-      }
-      if (selectedPaymentMethod === KbzPaymentMethods.PWA) {
+
+      if (selectedPaymentMethod === MptPayMethods.PIN) {
         if (_paymentInfo?.redirectUrl) {
           //test in mobile
           return window.open(_paymentInfo?.redirectUrl, "_blank") as Window
@@ -62,10 +51,9 @@ export default function KbzPay() {
           paymentOptions={paymentOptions}
         ></PaymentPage>
       )}
-      <KbzQrCodeModal open={qrModal} setOpen={setQrModal} />
     </>
   )
 }
-KbzPay.getLayout = (page: ReactElement) => {
+MPTPay.getLayout = (page: ReactElement) => {
   return <Layout>{page}</Layout>
 }

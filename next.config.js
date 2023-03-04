@@ -11,6 +11,7 @@ module.exports = withStoreConfig({
       "minio.hz-fal.eiga.sbs",
       "piware.ap-south-1.linodeobjects.com",
       "eiga.ap-south-1.linodeobjects.com",
+      "pub-3f83c023fc4c4aadb9b2c0c242b39c72.r2.dev",
     ],
   },
 })

@@ -13,8 +13,28 @@ type PaymentContainerProps = {
 }
 
 const PaymentInfoMap: Record<string, { title: string; description: string }> = {
+  MytelPay: {
+    title: "Mytel Pay",
+    description: "Pay with Mytel Mobile Wallet",
+  },
+  MPTPay: {
+    title: "MPT Pay",
+    description: "Pay with MPT Mobile Wallet",
+  },
+  OnePay: {
+    title: "One Pay",
+    description: "Pay with AGD One Pay Mobile Wallet",
+  },
+  KbzMbanking: {
+    title: "KBZ Mbanking",
+    description: "Pay with KBZ Bank Account",
+  },
+  CBPay: {
+    title: "CB Pay",
+    description: "Pay with CB Pay",
+  },
   KbzPay: {
-    title: "KbzPay",
+    title: "Kbz Pay",
     description: "Pay with Kbz Pay",
   },
   MPU: {
@@ -26,7 +46,7 @@ const PaymentInfoMap: Record<string, { title: string; description: string }> = {
     description: "Pay with AYA Pay",
   },
   WavePay: {
-    title: "WavePay",
+    title: "Wave Pay",
     description: "Pay with Wave Pay",
   },
   stripe: {
