@@ -5,7 +5,11 @@ import { GenerateIcon } from "@modules/common/components/payment-options/generat
 import Layout from "@modules/layout/templates"
 import AyaPinModal from "@modules/payment/aya/pin-modal"
 import { AyaPinFormValues } from "@modules/payment/aya/pin-modal/modal-content"
-import AyaQrCodeModal from "@modules/payment/aya/qr-code-modal"
+import dynamic from "next/dynamic"
+const AyaQrCodeModal = dynamic(
+  () => import("@modules/payment/aya/qr-code-modal"),
+  { ssr: false }
+)
 import { useCart } from "medusa-react"
 import { useRouter } from "next/router"
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react"

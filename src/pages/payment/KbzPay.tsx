@@ -4,7 +4,11 @@ import type { Cart } from "@medusajs/medusa"
 import PaymentPage from "@modules/common/components/payment-options"
 import { GenerateIcon } from "@modules/common/components/payment-options/generate-icons"
 import Layout from "@modules/layout/templates"
-import KbzQrCodeModal from "@modules/payment/kbz/qr-code-modal"
+import dynamic from "next/dynamic"
+const KbzQrCodeModal = dynamic(
+  () => import("@modules/payment/kbz/qr-code-modal"),
+  { ssr: false }
+)
 import { useCart } from "medusa-react"
 import { useRouter } from "next/router"
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react"
