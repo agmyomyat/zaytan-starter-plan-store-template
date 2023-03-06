@@ -19,7 +19,7 @@ export interface PaymentContext {
     ) => void
   }) => void
   updatingPaymentSession: boolean
-  paymentInfo: PaymentInfo
+  paymentInfo: PaymentInfo | undefined
 }
 const PaymentContext = createContext<PaymentContext | null>(null)
 

@@ -1,5 +1,4 @@
-import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react"
-import { Dialog, Transition } from "@headlessui/react"
+import { Dispatch, SetStateAction } from "react"
 import { QRCodeSVG } from "qrcode.react"
 import PaymentModal from "../components/payment-modal"
 import { usePayment } from "@lib/context/payment-context"
@@ -37,7 +36,7 @@ export default function KbzQrCodeModal(props: {
         </h3>
       </div>
       <QRCodeSVG
-        value={paymentInfo.qrCode || ""}
+        value={paymentInfo?.qrCode || ""}
         className="w-96 h-96 p-10 max-w-full"
       />
     </PaymentModal>
