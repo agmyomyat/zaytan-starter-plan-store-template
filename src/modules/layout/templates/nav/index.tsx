@@ -5,6 +5,7 @@ import DropdownMenu from "@modules/layout/components/dropdown-menu"
 import MobileMenu from "@modules/mobile-menu/templates"
 import DesktopSearchModal from "@modules/search/templates/desktop-search-modal"
 import clsx from "clsx"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -71,9 +72,17 @@ const Nav = () => {
           </div>
 
           <div className="flex items-center h-full">
-            <Link href="/">
+            <Image
+              src={
+                "https://f4d3h9i5.rocketcdn.me/wp-content/uploads/2023/02/isure_logo_update2-300x88.webp"
+              }
+              alt="isure"
+              height={50}
+              width={170}
+            />
+            {/* <Link href="/">
               <a className="text-xl-semi uppercase">Acme</a>
-            </Link>
+            </Link> */}
           </div>
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">

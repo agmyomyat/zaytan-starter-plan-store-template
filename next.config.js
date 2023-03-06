@@ -6,6 +6,7 @@ module.exports = withStoreConfig({
   reactStrictMode: true,
   images: {
     domains: [
+      "f4d3h9i5.rocketcdn.me",
       "medusa-public-images.s3.eu-west-1.amazonaws.com",
       "localhost",
       "minio.hz-fal.eiga.sbs",
