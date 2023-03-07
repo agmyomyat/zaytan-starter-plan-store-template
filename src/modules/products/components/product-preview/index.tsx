@@ -16,7 +16,7 @@ const ProductPreview = ({
           <Thumbnail thumbnail={thumbnail} size="full" />
           <div className="text-base-regular mt-2">
             <span>{title}</span>
-            <div className="flex items-center gap-x-2 mt-1">
+            <div className="flex flex-col items-center gap-x-2 mt-1">
               {price ? (
                 <>
                   {price.price_type === "sale" && (
