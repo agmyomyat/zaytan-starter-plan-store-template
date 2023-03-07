@@ -21,7 +21,10 @@ const Items = ({ items, region, cartId }: ItemsProps) => {
       {enrichedItems?.length
         ? enrichedItems.map((item) => {
             return (
-              <div className="grid grid-cols-[122px_1fr] gap-x-4" key={item.id}>
+              <div
+                className="grid small:grid-cols-[122px_1fr] grid-cols-1 gap-x-4"
+                key={item.id}
+              >
                 <div className="w-[122px]">
                   <Thumbnail thumbnail={item.thumbnail} size="full" />
                 </div>
@@ -29,7 +32,7 @@ const Items = ({ items, region, cartId }: ItemsProps) => {
                   <div className="flex flex-col flex-1 text-small-regular">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="text-base-regular overflow-ellipsis overflow-hidden whitespace-nowrap mr-4">
+                        <h3 className="text-base-regular overflow-ellipsis overflow-hidden mr-4">
                           <Link
                             href={`/products/${item.variant.product.handle}`}
                           >
