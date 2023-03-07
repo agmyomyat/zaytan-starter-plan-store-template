@@ -64,7 +64,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
 
   const storeRegion = (regionId: string, countryCode: string) => {
     if (!IS_SERVER) {
-      localStorage.setItem(
+      sessionStorage.setItem(
         "medusa_region",
         JSON.stringify({ regionId, countryCode })
       )
@@ -75,7 +75,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
 
   useEffect(() => {
     if (!IS_SERVER) {
-      const storedRegion = localStorage.getItem("medusa_region")
+      const storedRegion = sessionStorage.getItem("medusa_region")
       if (storedRegion) {
         const { countryCode } = JSON.parse(storedRegion)
         setCountryCode(countryCode)
@@ -85,7 +85,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
 
   const getRegion = () => {
     if (!IS_SERVER) {
-      const region = localStorage.getItem("medusa_region")
+      const region = sessionStorage.getItem("medusa_region")
       if (region) {
         return JSON.parse(region) as { regionId: string; countryCode: string }
       }
@@ -131,20 +131,20 @@ export const StoreProvider = ({ children }: StoreProps) => {
 
   const storeCart = (id: string) => {
     if (!IS_SERVER) {
-      localStorage.setItem(CART_KEY, id)
+      sessionStorage.setItem(CART_KEY, id)
     }
   }
 
   const getCart = () => {
     if (!IS_SERVER) {
-      return localStorage.getItem(CART_KEY)
+      return sessionStorage.getItem(CART_KEY)
     }
     return null
   }
 
   const deleteCart = () => {
     if (!IS_SERVER) {
-      localStorage.removeItem(CART_KEY)
+      sessionStorage.removeItem(CART_KEY)
     }
   }
 
