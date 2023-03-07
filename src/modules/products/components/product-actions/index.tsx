@@ -5,12 +5,21 @@ import OptionSelect from "@modules/products/components/option-select"
 import clsx from "clsx"
 import Link from "next/link"
 import React, { useEffect, useMemo } from "react"
-import { Product } from "types/medusa"
+import { Product, Variant } from "types/medusa"
 
 type ProductActionsProps = {
   product: Product
 }
 
+export const VariantAvailabilityStatus = (
+  inStock: boolean,
+  variant: Variant | undefined
+) =>
+  useMemo(() => {
+    if (!variant) return "Not Available"
+    if (!inStock) return "Out of Stock"
+    return "Add to cart"
+  }, [inStock, variant])
 const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
   const {
     updateOptions,
@@ -22,11 +31,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
   } = useProductActions()
 
   const price = useProductPrice({ id: product.id, variantId: variant?.id })
-  const variantAvailabilityStatus = useMemo(() => {
-    if (!variant) return "Not Available"
-    if (!inStock) return "Out of Stock"
-    return "Add to cart"
-  }, [inStock, variant])
+  const variantAvailabilityStatus = VariantAvailabilityStatus(inStock, variant)
   const selectedPrice = useMemo(() => {
     const { variantPrice, cheapestPrice } = price
 
