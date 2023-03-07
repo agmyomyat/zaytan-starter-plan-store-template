@@ -1,4 +1,5 @@
 import { PaymentInfo, usePayment } from "@lib/context/payment-context"
+import { windowRedirect } from "@lib/util/redirect"
 import type { Cart } from "@medusajs/medusa"
 import PaymentPage from "@modules/common/components/payment-options"
 import { GenerateIcon } from "@modules/common/components/payment-options/generate-icons"
@@ -20,9 +21,7 @@ export default function KbzMbanking() {
 
       if (selectedPaymentMethod === KbzMbankingMethods.PWA) {
         if (_paymentInfo?.redirectUrl) {
-          //test in mobile
-          return window.open(_paymentInfo?.redirectUrl, "_blank") as Window
-          //       return (redirect.location.href = paymentInfo?.redirectUrl as string)
+          windowRedirect(_paymentInfo?.redirectUrl)
         }
       }
     },

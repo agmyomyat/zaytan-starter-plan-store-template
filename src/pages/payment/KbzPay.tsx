@@ -12,6 +12,7 @@ const KbzQrCodeModal = dynamic(
 import { useCart } from "medusa-react"
 import { useRouter } from "next/router"
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react"
+import { windowRedirect } from "@lib/util/redirect"
 const KbzPaymentMethods = {
   QR: "QR",
   PWA: "PWA",
@@ -35,9 +36,7 @@ export default function KbzPay() {
       }
       if (selectedPaymentMethod === KbzPaymentMethods.PWA) {
         if (_paymentInfo?.redirectUrl) {
-          //test in mobile
-          return window.open(_paymentInfo?.redirectUrl, "_blank") as Window
-          //       return (redirect.location.href = paymentInfo?.redirectUrl as string)
+          windowRedirect(_paymentInfo?.redirectUrl)
         }
       }
     },

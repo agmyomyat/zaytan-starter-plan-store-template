@@ -1,5 +1,6 @@
 import { PaymentInfo, usePayment } from "@lib/context/payment-context"
 import useNotification from "@lib/hooks/use-notification"
+import { windowRedirect } from "@lib/util/redirect"
 import type { Cart } from "@medusajs/medusa"
 import PaymentPage from "@modules/common/components/payment-options"
 import { GenerateIcon } from "@modules/common/components/payment-options/generate-icons"
@@ -22,7 +23,9 @@ export default function MPU() {
       const _paymentInfo = cart?.payment_session?.data
         ?.paymentInfo as PaymentInfo
       if (selectedPaymentMethod === MpuPaymentMethods.OTP) {
-        return window.open(_paymentInfo?.redirectUrl, "_blank") as Window
+        if (_paymentInfo?.redirectUrl) {
+          windowRedirect(_paymentInfo?.redirectUrl)
+        }
       }
     },
     [selectedPaymentMethod]
