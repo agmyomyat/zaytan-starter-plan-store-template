@@ -9,10 +9,10 @@ import Summary from "./summary"
 
 const CartTemplate = () => {
   const { cart } = useCart()
-  const { customer, isLoading } = useMeCustomer()
+  // const { customer, isLoading } = useMeCustomer()
   const items = useEnrichedLineItems()
 
-  if (!cart || !cart?.id?.length || isLoading) {
+  if (!cart || !cart?.id?.length) {
     return <SkeletonCartPage />
   }
 

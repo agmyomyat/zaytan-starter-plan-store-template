@@ -7,17 +7,17 @@ import AddressSelect from "../address-select"
 import CountrySelect from "../country-select"
 
 const ShippingAddress = () => {
-  const { customer } = useMeCustomer()
+  // const { customer } = useMeCustomer()
   return (
     <div>
-      {customer && (customer.shipping_addresses?.length || 0) > 0 && (
+      {/* {customer && (customer.shipping_addresses?.length || 0) > 0 && (
         <div className="mb-6 flex flex-col gap-y-4 bg-amber-100 p-4">
           <p className="text-small-regular">
             {`Hi ${customer.first_name}, do you want to use one of your saved addresses?`}
           </p>
           <AddressSelect addresses={customer.shipping_addresses} />
         </div>
-      )}
+      )} */}
       <ConnectForm<CheckoutFormValues>>
         {({ register, formState: { errors, touchedFields } }) => (
           <div className="grid grid-cols-1 gap-y-2">

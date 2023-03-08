@@ -10,7 +10,7 @@ import ReactCountryFlag from "react-country-flag"
 
 const MainMenu = () => {
   const { collections } = useCollections()
-  const { customer } = useMeCustomer()
+  // const { customer } = useMeCustomer()
   const { countryCode } = useStore()
 
   const countries = useCountryOptions()

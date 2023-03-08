@@ -3,9 +3,9 @@ import { useCustomerOrders, useMeCustomer } from "medusa-react"
 
 const OverviewTemplate = () => {
   const { orders } = useCustomerOrders()
-  const { customer } = useMeCustomer()
+  // const { customer } = useMeCustomer()
 
-  return <Overview orders={orders} customer={customer} />
+  return <Overview orders={orders} />
 }
 
 export default OverviewTemplate

@@ -84,11 +84,11 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
     completeCheckout: { mutate: complete, isLoading: completingCheckout },
   } = useCart()
 
-  const { customer } = useMeCustomer()
+  // const { customer } = useMeCustomer()
   const { countryCode } = useStore()
 
   const methods = useForm<CheckoutFormValues>({
-    defaultValues: mapFormValues(customer, cart, countryCode),
+    defaultValues: mapFormValues(undefined, cart, countryCode),
     reValidateMode: "onChange",
   })
   const {
@@ -179,9 +179,9 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
    */
   useEffect(() => {
     if (cart?.id) {
-      methods.reset(mapFormValues(customer, cart, countryCode))
+      methods.reset(mapFormValues(undefined, cart, countryCode))
     }
-  }, [customer, cart, methods, countryCode])
+  }, [cart, methods, countryCode])
 
   useEffect(() => {
     if (!cart) {
