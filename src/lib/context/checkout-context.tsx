@@ -348,7 +348,7 @@ export const CheckoutProvider = ({ children }: CheckoutProviderProps) => {
     complete(undefined, {
       onSuccess: ({ data }) => {
         resetCart()
-        push(`/order/confirmed/${data.id}`)
+        push(`/order/confirmed/?id=${data.id}`)
       },
     })
   }

@@ -34,7 +34,7 @@ const Items = ({ items, region, cartId }: ItemsProps) => {
                       <div>
                         <h3 className="text-base-regular overflow-ellipsis overflow-hidden mr-4">
                           <Link
-                            href={`/products/${item.variant.product.handle}`}
+                            href={`/products/?handle=${item.variant.product.handle}`}
                           >
                             <a>{item.title}</a>
                           </Link>

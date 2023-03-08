@@ -102,7 +102,7 @@ const Overview = ({ orders, customer }: OverviewProps) => {
                   orders.slice(0, 5).map((order) => {
                     return (
                       <li key={order.id}>
-                        <Link href={`/order/details/${order.id}`}>
+                        <Link href={`/order/details/?id=${order.id}`}>
                           <a>
                             <div className="bg-gray-50 flex justify-between items-center p-4">
                               <div className="grid grid-cols-3 grid-rows-2 text-small-regular gap-x-4 flex-1">

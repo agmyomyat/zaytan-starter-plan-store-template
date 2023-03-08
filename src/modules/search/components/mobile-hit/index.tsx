@@ -7,7 +7,7 @@ const MobileHit = ({ hit }: HitProps) => {
   const { push } = useRouter()
 
   const go = () => {
-    push(`/products/${hit.handle}`)
+    push(`/products/?handle=${hit.handle}`)
     close()
   }
 

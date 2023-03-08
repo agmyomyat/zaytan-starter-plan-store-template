@@ -24,7 +24,7 @@ const FooterNav = () => {
             >
               {collections?.map((c) => (
                 <li key={c.id}>
-                  <Link href={`/collections/${c.id}`}>
+                  <Link href={`/collections/?id=${c.id}`}>
                     <a>{c.title}</a>
                   </Link>
                 </li>
