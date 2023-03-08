@@ -27,11 +27,11 @@ function App({
         <MobileMenuProvider>
           <CartProvider>
             <StoreProvider>
-              {/* <AccountProvider> */}
-              <PaymentProvider>
-                {getLayout(<Component {...pageProps} />)}
-              </PaymentProvider>
-              {/* </AccountProvider> */}
+              <AccountProvider>
+                <PaymentProvider>
+                  {getLayout(<Component {...pageProps} />)}
+                </PaymentProvider>
+              </AccountProvider>
             </StoreProvider>
           </CartProvider>
         </MobileMenuProvider>
