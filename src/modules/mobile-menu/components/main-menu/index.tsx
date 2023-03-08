@@ -78,7 +78,7 @@ const MainMenu = () => {
               <>
                 {collections.map((collection) => (
                   <li key={collection.id} className="bg-gray-50 p-4">
-                    <Link href={`/collections/${collection.id}`}>
+                    <Link href={`/collections/?id=${collection.id}`}>
                       <a>
                         <button
                           className="flex items-center justify-between w-full"
