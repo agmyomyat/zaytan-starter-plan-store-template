@@ -45,10 +45,8 @@ export const fetchCollectionProducts = async ({
   }
 }
 
-const CollectionPage: NextPageWithLayout<PrefetchedPageProps> = ({
-  notFound,
-}) => {
-  const { query, isFallback, replace } = useRouter()
+const CollectionPage: NextPageWithLayout<PrefetchedPageProps> = () => {
+  const { query, replace } = useRouter()
   const id = typeof query.id === "string" ? query.id : ""
 
   const { data, isError, isSuccess, isLoading } = useQuery(
@@ -56,19 +54,11 @@ const CollectionPage: NextPageWithLayout<PrefetchedPageProps> = ({
     () => fetchCollection(id)
   )
 
-  if (notFound) {
-    if (IS_BROWSER) {
-      replace("/404")
-    }
-
-    return <SkeletonCollectionPage />
-  }
-
   if (isError) {
     replace("/404")
   }
 
-  if (isFallback || isLoading || !data) {
+  if (isLoading || !data) {
     return <SkeletonCollectionPage />
   }
 
@@ -86,50 +76,6 @@ const CollectionPage: NextPageWithLayout<PrefetchedPageProps> = ({
 
 CollectionPage.getLayout = (page: ReactElement) => {
   return <Layout>{page}</Layout>
-}
-
-export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const ids = await getCollectionIds()
-
-  return {
-    paths: ids.map((id) => ({ params: { id } })),
-    fallback: true,
-  }
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const queryClient = new QueryClient()
-  const id = context.params?.id as string
-
-  await queryClient.prefetchQuery(["get_collection", id], () =>
-    fetchCollection(id)
-  )
-
-  await queryClient.prefetchInfiniteQuery(
-    ["get_collection_products", id],
-    ({ pageParam }) => fetchCollectionProducts({ pageParam, id }),
-    {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    }
-  )
-
-  const queryData = await queryClient.getQueryData([`get_collection`, id])
-
-  if (!queryData) {
-    return {
-      props: {
-        notFound: true,
-      },
-    }
-  }
-
-  return {
-    props: {
-      // Work around see – https://github.com/TanStack/query/issues/1458#issuecomment-747716357
-      dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
-      notFound: false,
-    },
-  }
 }
 
 export default CollectionPage

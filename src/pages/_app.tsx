@@ -22,21 +22,21 @@ function App({
         client: queryClient,
       }}
     >
-      <Hydrate state={pageProps.dehydratedState}>
-        <CartDropdownProvider>
-          <MobileMenuProvider>
-            <CartProvider>
-              <StoreProvider>
-                <AccountProvider>
-                  <PaymentProvider>
-                    {getLayout(<Component {...pageProps} />)}
-                  </PaymentProvider>
-                </AccountProvider>
-              </StoreProvider>
-            </CartProvider>
-          </MobileMenuProvider>
-        </CartDropdownProvider>
-      </Hydrate>
+      {/* <Hydrate state={pageProps.dehydratedState}> */}
+      <CartDropdownProvider>
+        <MobileMenuProvider>
+          <CartProvider>
+            <StoreProvider>
+              <AccountProvider>
+                <PaymentProvider>
+                  {getLayout(<Component {...pageProps} />)}
+                </PaymentProvider>
+              </AccountProvider>
+            </StoreProvider>
+          </CartProvider>
+        </MobileMenuProvider>
+      </CartDropdownProvider>
+      {/* </Hydrate> */}
     </MedusaProvider>
   )
 }

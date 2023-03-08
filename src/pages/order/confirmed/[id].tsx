@@ -60,26 +60,4 @@ Confirmed.getLayout = (page: ReactElement) => {
   return <Layout>{page}</Layout>
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  }
-}
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id as string
-  const queryClient = new QueryClient()
-
-  await queryClient.prefetchQuery(["get_order_confirmed", id], () =>
-    fetchOrder(id)
-  )
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  }
-}
-
 export default Confirmed
