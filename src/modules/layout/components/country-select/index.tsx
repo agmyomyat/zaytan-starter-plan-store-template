@@ -47,8 +47,8 @@ const CountrySelect = () => {
         onChange={handleChange}
         value={
           countryCode
-            ? options?.find((o) => o.country === countryCode)
-            : undefined
+            ? options?.find((o) => o.country === countryCode) || ""
+            : ""
         }
       >
         <Listbox.Button className="py-1 w-full">
