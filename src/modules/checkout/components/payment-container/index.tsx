@@ -2,7 +2,6 @@ import { PaymentSession } from "@medusajs/medusa"
 import Radio from "@modules/common/components/radio"
 import clsx from "clsx"
 import React from "react"
-import PaymentStripe from "../payment-stripe"
 import PaymentTest from "../payment-test"
 
 type PaymentContainerProps = {
@@ -58,7 +57,7 @@ const PaymentInfoMap: Record<string, { title: string; description: string }> = {
     description: "Secure payment with PayPal",
   },
   manual: {
-    title: "Test payment",
+    title: "Home Delivery",
     description: "Test payment using medusa-payment-manual",
   },
 }
@@ -111,7 +110,7 @@ const PaymentElement = ({
     case "stripe":
       return (
         <div className="pt-8 pr-7">
-          <PaymentStripe />
+          {/* <PaymentStripe /> */}
         </div>
       )
 
