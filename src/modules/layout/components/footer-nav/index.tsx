@@ -65,7 +65,7 @@ const FooterNav = () => {
           </div> */}
         </div>
       </div>
-      <div className="flex flex-col-reverse gap-y-4 justify-center xsmall:items-center xsmall:flex-row xsmall:justify-between">
+      <div className="flex flex-col-reverse gap-y-4 gap-x-2 justify-center xsmall:items-center xsmall:flex-row xsmall:justify-between">
         <span className="text-xsmall-regular text-gray-500">
           © Copyright 2023 ZayTan
         </span>
