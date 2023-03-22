@@ -56,8 +56,12 @@ const PaymentInfoMap: Record<string, { title: string; description: string }> = {
     title: "PayPal",
     description: "Secure payment with PayPal",
   },
+  cash_on_delivery: {
+    title: "Cash On Delivery",
+    description: "pay when your orders arrived",
+  },
   manual: {
-    title: "Home Delivery",
+    title: "Test payment",
     description: "Test payment using medusa-payment-manual",
   },
 }
@@ -108,11 +112,7 @@ const PaymentElement = ({
 }) => {
   switch (paymentSession.provider_id) {
     case "stripe":
-      return (
-        <div className="pt-8 pr-7">
-          {/* <PaymentStripe /> */}
-        </div>
-      )
+      return <div className="pt-8 pr-7">{/* <PaymentStripe /> */}</div>
 
     case "manual":
       // We only display the test payment form if we are in a development environment
