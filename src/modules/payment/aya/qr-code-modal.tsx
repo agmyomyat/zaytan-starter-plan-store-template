@@ -1,7 +1,9 @@
 import { usePayment } from "@lib/context/payment-context"
+import { useTransactionStatus } from "@lib/hooks/use-transaction-status"
 import { useCart } from "medusa-react"
+import { useRouter } from "next/router"
 import { QRCodeSVG } from "qrcode.react"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import PaymentModal from "../components/payment-modal"
 
 export default function AyaQrCodeModal(props: {
@@ -10,6 +12,13 @@ export default function AyaQrCodeModal(props: {
 }) {
   const { paymentInfo } = usePayment()
   const { cart } = useCart()
+  const { push } = useRouter()
+  const status = useTransactionStatus(props.open)
+  useEffect(() => {
+    if (status === "SUCCESS") {
+      push(`/order/confirmed?cart_id=${cart!.id}`)
+    }
+  }, [cart, push, status])
   return (
     <PaymentModal
       hideCloseButton={true}
