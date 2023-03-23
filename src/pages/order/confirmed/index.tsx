@@ -37,10 +37,10 @@ const Confirmed: NextPageWithLayout = () => {
   }, [cartId, id])
 
   const { isSuccess, data, isLoading, isError } = useQuery(
-    ["get_order_confirmed", id],
-    () => fetchOrder_(id),
+    ["get_order_confirmed", id || cartId],
+    ({ queryKey }) => fetchOrder_(queryKey[1]),
     {
-      enabled: id.length > 0,
+      enabled: id.length > 0 || cartId.length > 0,
       staleTime: Infinity,
     }
   )

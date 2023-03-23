@@ -1,27 +1,30 @@
+import { usePayment } from "@lib/context/payment-context"
+import { useCart } from "medusa-react"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
-import { useQuery, useQueryClient } from "react-query"
-
-export function useTransactionStatus(id: string) {
+import { useEffect, useState } from "react"
+type TransactionStatusType = "PENDING" | "SUCCESS"
+export function useTransactionStatus(shouldTransactionCheck: boolean) {
   const { push } = useRouter()
-  const client = useQueryClient()
+  const { paymentInfo } = usePayment()
+  const [transactionStatus, setTransactionStatus] =
+    useState<TransactionStatusType>("PENDING")
 
   useEffect(() => {
+    if (!paymentInfo?.merchantOrderId || !shouldTransactionCheck) return
+    console.log("mount")
     const interval = setInterval(() => {
-      client
-        .fetchQuery(["order_status", id], ({ queryKey }) =>
-          fetchTransactionStatus(queryKey[1])
+      fetchTransactionStatus(paymentInfo.merchantOrderId!).then((data) =>
+        setTransactionStatus(
+          data.result.data.transactionStatus as TransactionStatusType
         )
-        .then(
-          (data) =>
-            data.result.data.transactionStatus === "SUCCESS" &&
-            push(`/order/confirmed/?id=${id}`)
-        )
+      )
     }, 3000)
     return () => {
+      console.log("destroy")
       clearInterval(interval)
     }
-  }, [client, id, push])
+  }, [paymentInfo?.merchantOrderId, push, shouldTransactionCheck])
+  return transactionStatus
 }
 interface TransactionStatusResponse {
   result: {
@@ -34,7 +37,7 @@ interface TransactionStatusResponse {
 async function fetchTransactionStatus(id: string) {
   try {
     const res = await fetch(
-      `${process.env.PIWARE_API_URL}/api/trpc/payment.status?input={"id":"${id}"}`
+      `${process.env.NEXT_PUBLIC_PIWARE_API_URL}/api/trpc/payment.status?input={"id":"${id}"}`
     )
     if (res.status !== 200) throw new Error("Error While Fetching Order Status")
     return (await res.json()) as TransactionStatusResponse

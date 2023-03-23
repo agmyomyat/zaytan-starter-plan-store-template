@@ -1,14 +1,23 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { QRCodeSVG } from "qrcode.react"
 import PaymentModal from "../components/payment-modal"
 import { usePayment } from "@lib/context/payment-context"
 import { useCart } from "medusa-react"
+import { useTransactionStatus } from "@lib/hooks/use-transaction-status"
+import { useRouter } from "next/router"
 export default function KbzQrCodeModal(props: {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
   const { paymentInfo } = usePayment()
   const { cart } = useCart()
+  const { push } = useRouter()
+  const status = useTransactionStatus(props.open)
+  useEffect(() => {
+    if (status === "SUCCESS") {
+      push(`/order/confirmed?cart_id=${cart!.id}`)
+    }
+  }, [cart, push, status])
   return (
     <PaymentModal
       open={props.open}

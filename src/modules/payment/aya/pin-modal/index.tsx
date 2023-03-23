@@ -1,6 +1,8 @@
 import { usePayment } from "@lib/context/payment-context"
 import useNotification from "@lib/hooks/use-notification"
+import { useTransactionStatus } from "@lib/hooks/use-transaction-status"
 import { useCart } from "medusa-react"
+import { useRouter } from "next/router"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 import PaymentModal from "../../components/payment-modal"
@@ -14,6 +16,14 @@ export default function AyaPinModal(props: {
   const [paymentSteps, setPaymentSteps] = useState<PaymentSteps>("phone_info")
   const { updatingPaymentSession } = usePayment()
   const notification = useNotification()
+  const { cart } = useCart()
+  const { push } = useRouter()
+  const status = useTransactionStatus(props.open)
+  useEffect(() => {
+    if (status === "SUCCESS") {
+      push(`/order/confirmed?cart_id=${cart!.id}`)
+    }
+  }, [cart, push, status])
   const form = useForm<AyaPinFormValues>({
     defaultValues: {
       phoneNumber: "",
@@ -42,7 +52,6 @@ export default function AyaPinModal(props: {
     props.continueAction(data)
     setPaymentSteps("waiting_for_payment")
   }
-  const { cart } = useCart()
   return (
     <PaymentModal
       loading={paymentSteps === "waiting_for_payment"}
