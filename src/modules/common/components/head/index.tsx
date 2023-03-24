@@ -8,11 +8,10 @@ type HeadProps = {
 }
 
 const Head: React.FC<HeadProps> = ({ title, description, image }) => {
+  const _title = `${title} | ${process.env.NEXT_PUBLIC_STORE_NAME}`
   return (
     <NextHead>
-      <title>
-        {title} | {process.env.NEXT_PUBLIC_STORE_NAME}
-      </title>
+      <title>{_title}</title>
       <meta itemProp="name" content={title} />
       {description && <meta itemProp="description" content={description} />}
       {image && <meta itemProp="image" content={image} />}
