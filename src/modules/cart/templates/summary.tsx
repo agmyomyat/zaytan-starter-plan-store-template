@@ -14,19 +14,17 @@ const Summary = ({ cart }: SummaryProps) => {
   return (
     <div className="grid grid-cols-1 gap-y-6">
       <CartTotals cart={cart} />
-      <Link href="/checkout">
-        <a>
-          <Button
-            disabled={
-              adjustLineItemLoading || removeLineItemLoading || discountLoading
-            }
-            isLoading={
-              adjustLineItemLoading || removeLineItemLoading || discountLoading
-            }
-          >
-            Go to checkout
-          </Button>
-        </a>
+      <Link href="/checkout" passHref>
+        <Button
+          disabled={
+            adjustLineItemLoading || removeLineItemLoading || discountLoading
+          }
+          isLoading={
+            adjustLineItemLoading || removeLineItemLoading || discountLoading
+          }
+        >
+          Go to checkout
+        </Button>
       </Link>
     </div>
   )

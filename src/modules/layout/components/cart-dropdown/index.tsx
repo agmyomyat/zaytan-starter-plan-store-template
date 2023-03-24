@@ -21,7 +21,7 @@ const CartDropdown = () => {
   return (
     <div className="h-full z-50" onMouseEnter={open} onMouseLeave={close}>
       <Popover className="relative h-full">
-        <Link href="/cart" passHref>
+        <Link href="/cart" passHref legacyBehavior>
           <Popover.Button className="h-full">{`My Bag (${totalItems})`}</Popover.Button>
         </Link>
         <Transition
@@ -64,7 +64,7 @@ const CartDropdown = () => {
                                   <Link
                                     href={`/products/?handle=${item.variant.product.handle}`}
                                   >
-                                    <a>{item.title}</a>
+                                    {item.title}
                                   </Link>
                                 </h3>
                                 <LineItemOptions variant={item.variant} />
@@ -110,9 +110,7 @@ const CartDropdown = () => {
                     </span>
                   </div>
                   <Link href="/cart" passHref>
-                    <a>
-                      <Button>Go to bag</Button>
-                    </a>
+                    <Button>Go to bag</Button>
                   </Link>
                 </div>
               </>
@@ -124,11 +122,9 @@ const CartDropdown = () => {
                   </div>
                   <span>Your shopping bag is empty.</span>
                   <div>
-                    <Link href="/store">
-                      <a>
-                        <span className="sr-only">Go to all products page</span>
-                        <Button onClick={close}>Explore products</Button>
-                      </a>
+                    <Link href="/store" passHref>
+                      <span className="sr-only">Go to all products page</span>
+                      <Button onClick={close}>Explore products</Button>
                     </Link>
                   </div>
                 </div>

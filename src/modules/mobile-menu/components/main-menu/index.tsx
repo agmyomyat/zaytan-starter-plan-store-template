@@ -61,36 +61,32 @@ const MainMenu = () => {
         <div className="flex flex-col flex-1 text-large-regular text-gray-900">
           <ul className="flex flex-col gap-y-2">
             <li className="bg-gray-50 p-4">
-              <Link href="/store">
-                <a>
-                  <button
-                    className="flex items-center justify-between w-full"
-                    onClick={close}
-                  >
-                    <span className="sr-only">Go to Store</span>
-                    <span>Store</span>
-                    <ChevronDown className="-rotate-90" />
-                  </button>
-                </a>
+              <Link href="/store" passHref>
+                <button
+                  className="flex items-center justify-between w-full"
+                  onClick={close}
+                >
+                  <span className="sr-only">Go to Store</span>
+                  <span>Store</span>
+                  <ChevronDown className="-rotate-90" />
+                </button>
               </Link>
             </li>
             {collections ? (
               <>
                 {collections.map((collection) => (
                   <li key={collection.id} className="bg-gray-50 p-4">
-                    <Link href={`/collections/?id=${collection.id}`}>
-                      <a>
-                        <button
-                          className="flex items-center justify-between w-full"
-                          onClick={close}
-                        >
-                          <span className="sr-only">
-                            Go to {collection.title} collection
-                          </span>
-                          <span>{collection.title}</span>
-                          <ChevronDown className="-rotate-90" />
-                        </button>
-                      </a>
+                    <Link href={`/collections/?id=${collection.id}`} passHref>
+                      <button
+                        className="flex items-center justify-between w-full"
+                        onClick={close}
+                      >
+                        <span className="sr-only">
+                          Go to {collection.title} collection
+                        </span>
+                        <span>{collection.title}</span>
+                        <ChevronDown className="-rotate-90" />
+                      </button>
                     </Link>
                   </li>
                 ))}

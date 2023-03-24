@@ -72,17 +72,15 @@ const Nav = () => {
           </div>
 
           <div className="flex items-center h-full">
-            <Link href="/">
-              <a>
-                <Image
-                  src={
-                    "https://f4d3h9i5.rocketcdn.me/wp-content/uploads/2023/02/isure_logo_update2-300x88.webp"
-                  }
-                  alt="isure"
-                  height={50}
-                  width={170}
-                />
-              </a>
+            <Link href="/" passHref>
+              <Image
+                src={
+                  "https://f4d3h9i5.rocketcdn.me/wp-content/uploads/2023/02/isure_logo_update2-300x88.webp"
+                }
+                alt="isure"
+                height={50}
+                width={170}
+              />
             </Link>
           </div>
 
