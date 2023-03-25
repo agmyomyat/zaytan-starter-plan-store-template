@@ -11,7 +11,11 @@ export default {
   //   },
 } as ComponentMeta<typeof PaymentWarning>
 const Template: ComponentStory<typeof PaymentWarning> = (args) => (
-  <PaymentWarning />
+  <PaymentWarning {...args} />
 )
 
 export const Open = Template.bind({})
+Open.args = {
+  open: true,
+  continueAction: () => alert("do not pay Please do not pay"),
+}
