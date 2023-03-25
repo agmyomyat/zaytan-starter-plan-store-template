@@ -1,3 +1,5 @@
+import { PaymentWarning } from "@modules/demo/modal/warning/payment"
+import { useState } from "react"
 import Button from "../../button"
 
 export interface OptionsContainerProps {
@@ -7,7 +9,9 @@ export interface OptionsContainerProps {
   continue: () => void
   total: string
 }
+const IS_DEMO = process.env.NEXT_PUBLIC_IS_DEMO
 export default function PaymentOptionsContainer(props: OptionsContainerProps) {
+  const [paymentDemoModal, setPaymentDemoModal] = useState(false)
   return (
     <div className="absolute min-h-screen w-screen bg-gray-100 flex justify-center">
       <div className="relative  bg-white  max-w-full h-fit w-full mt-10  mx-10 sm:mx-96">
@@ -55,7 +59,12 @@ export default function PaymentOptionsContainer(props: OptionsContainerProps) {
             <Button
               isLoading={props.updatingPaymentSession}
               disabled={props.updatingPaymentSession}
-              onClick={props.continue}
+              onClick={() => {
+                if (IS_DEMO) {
+                  return setPaymentDemoModal(true)
+                }
+                props.continue()
+              }}
               className="!w-56"
             >
               Continue
@@ -64,6 +73,11 @@ export default function PaymentOptionsContainer(props: OptionsContainerProps) {
         </div>
         {props.CartItemsList}
       </div>
+      <PaymentWarning
+        open={paymentDemoModal}
+        setOpen={setPaymentDemoModal}
+        continueAction={props.continue}
+      />
     </div>
   )
 }

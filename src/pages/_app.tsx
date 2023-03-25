@@ -4,6 +4,7 @@ import { CartDropdownProvider } from "@lib/context/cart-dropdown-context"
 import { MobileMenuProvider } from "@lib/context/mobile-menu-context"
 import { PaymentProvider } from "@lib/context/payment-context"
 import { StoreProvider } from "@lib/context/store-context"
+import { HomePageDemoWarning } from "@modules/demo/modal/warning/home-page"
 import { CartProvider, MedusaProvider } from "medusa-react"
 import { Hydrate } from "react-query"
 import "styles/globals.css"
@@ -30,6 +31,7 @@ function App({
               <AccountProvider>
                 <PaymentProvider>
                   {getLayout(<Component {...pageProps} />)}
+                  <HomePageDemoWarning />
                 </PaymentProvider>
               </AccountProvider>
             </StoreProvider>
