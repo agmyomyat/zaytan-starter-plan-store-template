@@ -14,9 +14,7 @@ export function useTransactionStatus(shouldTransactionCheck: boolean) {
     console.log("mount")
     const interval = setInterval(() => {
       fetchTransactionStatus(paymentInfo.merchantOrderId!).then((data) =>
-        setTransactionStatus(
-          data.result.data.transactionStatus as TransactionStatusType
-        )
+        setTransactionStatus(data.result.data.status)
       )
     }, 3000)
     return () => {
@@ -29,8 +27,7 @@ export function useTransactionStatus(shouldTransactionCheck: boolean) {
 interface TransactionStatusResponse {
   result: {
     data: {
-      status: number
-      transactionStatus: string
+      status: TransactionStatusType
     }
   }
 }
