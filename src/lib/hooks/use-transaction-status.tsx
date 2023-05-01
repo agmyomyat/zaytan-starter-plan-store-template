@@ -34,7 +34,7 @@ interface TransactionStatusResponse {
 async function fetchTransactionStatus(id: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_PIWARE_API_URL}/api/trpc/payment.status?input={"id":"${id}"}`
+      `${process.env.NEXT_PUBLIC_PIWARE_API_URL}/trpc/payment.status?input={"id":"${id}"}`
     )
     if (res.status !== 200) throw new Error("Error While Fetching Order Status")
     return (await res.json()) as TransactionStatusResponse
