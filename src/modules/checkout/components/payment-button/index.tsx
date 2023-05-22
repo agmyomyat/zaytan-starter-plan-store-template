@@ -46,7 +46,6 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
   }, [cart])
 
   switch (paymentSession?.provider_id) {
-    case "manual":
     case "cash_on_delivery":
       return <ManualTestPaymentButton notReady={notReady || discountLoading} />
     case "KbzPay":
