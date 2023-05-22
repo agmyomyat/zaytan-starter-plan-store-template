@@ -242,7 +242,6 @@ export const StoreProvider = ({ children }: StoreProps) => {
           setCart(cart)
           storeCart(cart.id)
           timedOpen()
-          notification("Success", "successfully added to your bag", "success")
         },
         onError: (error) => {
           notification(
@@ -265,11 +264,6 @@ export const StoreProvider = ({ children }: StoreProps) => {
         onSuccess: ({ cart }) => {
           setCart(cart)
           storeCart(cart.id)
-          notification(
-            "Success",
-            "successfully removed from your bag",
-            "success"
-          )
         },
         onError: (error) => {
           handleError(error)

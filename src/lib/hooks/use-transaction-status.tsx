@@ -11,14 +11,12 @@ export function useTransactionStatus(shouldTransactionCheck: boolean) {
 
   useEffect(() => {
     if (!paymentInfo?.merchantOrderId || !shouldTransactionCheck) return
-    console.log("mount")
     const interval = setInterval(() => {
       fetchTransactionStatus(paymentInfo.merchantOrderId!).then((data) =>
         setTransactionStatus(data.result.data.status)
       )
     }, 3000)
     return () => {
-      console.log("destroy")
       clearInterval(interval)
     }
   }, [paymentInfo?.merchantOrderId, push, shouldTransactionCheck])
