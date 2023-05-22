@@ -15,7 +15,8 @@
     "cypress": "cypress open",
     "analyze": "ANALYZE=true next build",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "types": "tsc --noEmit"
   },
   "resolutions": {
     "webpack": "^5",
