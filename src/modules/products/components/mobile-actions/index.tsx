@@ -134,12 +134,12 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                       <X />
                     </button>
                   </div>
-                  <div className="bg-white px-6 py-12">
+                  <div className="bg-white px-6 py-12 overflow-scroll h-[calc(100vh-5rem)]">
                     {product.variants.length > 1 && (
-                      <div className="flex flex-col gap-y-6">
+                      <div className="flex flex-col gap-y-6  h-full">
                         {product.options.map((option) => {
                           return (
-                            <div key={option.id}>
+                            <div key={option.id} className="pb-2">
                               <OptionSelect
                                 option={option}
                                 current={options[option.id]}
