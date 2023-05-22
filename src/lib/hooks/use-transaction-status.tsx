@@ -13,7 +13,7 @@ export function useTransactionStatus(shouldTransactionCheck: boolean) {
     if (!paymentInfo?.merchantOrderId || !shouldTransactionCheck) return
     const interval = setInterval(() => {
       fetchTransactionStatus(paymentInfo.merchantOrderId!).then((data) =>
-        setTransactionStatus(data.result.data.status)
+        setTransactionStatus(data.status)
       )
     }, 3000)
     return () => {
@@ -23,16 +23,12 @@ export function useTransactionStatus(shouldTransactionCheck: boolean) {
   return transactionStatus
 }
 interface TransactionStatusResponse {
-  result: {
-    data: {
-      status: TransactionStatusType
-    }
-  }
+  status: TransactionStatusType
 }
 async function fetchTransactionStatus(id: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_PIWARE_API_URL}/trpc/payment.status?input={"id":"${id}"}`
+      `${process.env.NEXT_PUBLIC_PIWARE_API_URL}/payment/status?id=${id}`
     )
     if (res.status !== 200) throw new Error("Error While Fetching Order Status")
     return (await res.json()) as TransactionStatusResponse
