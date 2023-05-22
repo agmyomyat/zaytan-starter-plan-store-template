@@ -35,13 +35,13 @@ git clone https://github.com/agmyomyat/zaytan-starter-plan-store-template.git
 
 ```shell
 cd zaytan-starter-plan-store-template
-npm install
+yarn install
 ```
 
 3. Start the development server:
 
 ```shell
-npm run dev
+yarn dev
 ```
 
 4. Open your web browser and visit `http://localhost:3000` to access the store demo.
