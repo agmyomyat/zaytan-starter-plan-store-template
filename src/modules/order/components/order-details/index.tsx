@@ -1,4 +1,5 @@
-import { Order } from "@medusajs/medusa"
+import type { FulfillmentStatus, Order } from "@medusajs/medusa"
+import clsx from "clsx"
 
 type OrderDetailsProps = {
   order: Order
@@ -7,12 +8,17 @@ type OrderDetailsProps = {
 
 const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
   const items = order.items.reduce((acc, i) => acc + i.quantity, 0)
-
-  const formatStatus = (str: string) => {
-    const formatted = str.split("_").join(" ")
+  const formatStatus = (str: FulfillmentStatus) => {
+    const formatted =
+      str === "not_fulfilled"
+        ? "In progress..."
+        : str === "fulfilled"
+        ? "Packaging..."
+        : "Shipped"
 
     return formatted.slice(0, 1).toUpperCase() + formatted.slice(1)
   }
+  const fulfillmentStatus = formatStatus(order.fulfillment_status)
 
   return (
     <div className="p-10 border-b border.gray-200">
@@ -26,7 +32,18 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
         <span>{`${items} ${items !== 1 ? "items" : "item"}`}</span>
         {showStatus && (
           <>
-            <span>{formatStatus(order.fulfillment_status)}</span>
+            <span
+              className={clsx({
+                "bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded":
+                  order.fulfillment_status === "not_fulfilled",
+                "bg-yellow-100 text-yellow-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded":
+                  order.fulfillment_status === "fulfilled",
+                "bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded":
+                  order.fulfillment_status === "shipped",
+              })}
+            >
+              {fulfillmentStatus}
+            </span>
             {/* <span>{formatStatus(order.payment_status)}</span> */}
           </>
         )}
@@ -34,5 +51,4 @@ const OrderDetails = ({ order, showStatus }: OrderDetailsProps) => {
     </div>
   )
 }
-
 export default OrderDetails
