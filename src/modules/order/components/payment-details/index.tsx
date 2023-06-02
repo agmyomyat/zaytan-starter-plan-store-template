@@ -1,4 +1,4 @@
-import { Payment, PaymentStatus } from "@medusajs/medusa"
+import type { Payment, PaymentStatus } from "@medusajs/medusa"
 
 type PaymentDetailsProps = {
   payments: Payment[]
@@ -19,7 +19,7 @@ const PaymentDetails = ({ payments, paymentStatus }: PaymentDetailsProps) => {
             case "manual":
               return <TestDetails key={p.id} />
             default:
-              return null
+              return <DingerPaymentDetails key={p.id} payment={p} />
           }
         })}
       </div>
@@ -32,6 +32,17 @@ const PayPalDetails = () => {
     <div className="flex flex-col text-base-regular">
       <span className="text-small-regular text-gray-700">PayPal</span>
       <span>PayPal payment</span>
+    </div>
+  )
+}
+const DingerPaymentDetails = ({ payment }: { payment: Payment }) => {
+  const formattedPaymentProvider = payment.provider_id.split("_").join(" ")
+  return (
+    <div className="flex flex-col text-base-regular">
+      <span className="text-small-regular text-gray-700">
+        {formattedPaymentProvider}
+      </span>
+      <span>Pay with {formattedPaymentProvider}</span>
     </div>
   )
 }
