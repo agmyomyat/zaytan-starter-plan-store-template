@@ -14,7 +14,7 @@ const FeaturedProducts = () => {
             Latest products
           </span>
           <p className="text-2xl-regular text-gray-900 max-w-lg mb-4">
-            Get Ready For New Expernce And Increase Accessibility.
+            Get Ready For New Experience And Increase Accessibility.
           </p>
           <UnderlineLink href="/store">Explore products</UnderlineLink>
         </div>
