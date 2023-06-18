@@ -126,14 +126,6 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                 leaveTo="opacity-0"
               >
                 <Dialog.Panel className="w-full h-full transform overflow-hidden text-left flex flex-col gap-y-3">
-                  <div className="w-full flex justify-end pr-6">
-                    <button
-                      onClick={close}
-                      className="bg-white w-12 h-12 rounded-full text-gray-900 flex justify-center items-center"
-                    >
-                      <X />
-                    </button>
-                  </div>
                   <div className="bg-white px-6 py-12 overflow-scroll h-[calc(100vh-5rem)]">
                     {product.variants.length > 1 && (
                       <div className="flex flex-col gap-y-6  h-full">
@@ -151,6 +143,14 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                         })}
                       </div>
                     )}
+                  </div>
+                  <div className="mb-3">
+                    <Button
+                      className="bg-white !text-gray-700 text-lg border-gray-300"
+                      onClick={close}
+                    >
+                      X
+                    </Button>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
